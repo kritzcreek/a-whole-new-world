@@ -86,6 +86,7 @@
 
 ;; escape on quick fd
 (use-package evil-escape :ensure t
+  :diminish evil-escape-mode
   :config
   (evil-escape-mode))
 
@@ -98,6 +99,7 @@
 ;; Ivy things
 (use-package ivy
   :ensure t
+  :diminish ivy-mode
   :demand t
   :config
   (ivy-mode 1)
@@ -129,11 +131,14 @@
 
 ;; which-key
 (use-package which-key :ensure t
+  :diminish which-key-mode
   :config
   (which-key-mode 1))
 
 ;; company
-(use-package company :ensure t
+(use-package company
+  :ensure t
+  :diminish company-mode
   :config
   (global-company-mode)
   :general
@@ -142,6 +147,10 @@
                       "C-j" 'company-select-next
                       "C-k" 'company-select-previous))
 
+(use-package diminish
+  :ensure t
+  :config
+  (diminish 'undo-tree-mode))
 ;; magit
 (use-package magit :ensure t
   :general
@@ -152,15 +161,24 @@
 (use-package evil-magit :ensure t)
 
 ;; theme
-(use-package apropospriate-theme :ensure t
+(use-package color-theme-sanityinc-tomorrow
+  :ensure t
   :config 
-  (load-theme 'apropospriate-dark t)
-  (set-default-font "PragmataPro"))
-;; (load-theme 'apropospriate-light t))
+  (load-theme 'sanityinc-tomorrow-eighties t)
+  (set-face-attribute 'default nil :family "PragmataPro")
+  (set-face-attribute 'default nil :height 130))
 
-(use-package powerline :ensure t
+(use-package powerline
+  :ensure t
+  :init (setq powerline-height 35))
+
+(use-package spaceline
+  :ensure t
+  :init
+  (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
   :config
-  (powerline-default-theme))
+  (require 'spaceline-config)
+  (spaceline-spacemacs-theme))
 
 ;; haskell
 
