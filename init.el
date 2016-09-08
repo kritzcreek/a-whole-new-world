@@ -58,10 +58,14 @@
 (use-package general :ensure t
   :config
   (general-evil-setup)
+  (setq general-default-keymaps 'evil-normal-state-map)
   (general-nmap "SPC b d" 'kill-this-buffer
                 "SPC b b" 'switch-to-buffer
                 "SPC q"   'save-buffers-kill-terminal
-                "SPC a d" 'dired))
+                "SPC a d" 'dired
+                "C-+" 'text-scale-increase
+                "C--" 'text-scale-decrease
+                "C-=" '(lambda () (interactive) (text-scale-set 1))))
 
 ;; evil
 (use-package evil
