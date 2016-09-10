@@ -67,9 +67,14 @@
                 "SPC b b" 'switch-to-buffer
                 "SPC q"   'save-buffers-kill-terminal
                 "SPC a d" 'dired
+                "SPC TAB" 'switch-to-previous-buffer
                 "C-+" 'text-scale-increase
                 "C--" 'text-scale-decrease
                 "C-=" '(lambda () (interactive) (text-scale-set 1))))
+
+(defun switch-to-previous-buffer ()
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
 
 ;; evil
 (use-package evil
@@ -174,15 +179,8 @@
 
 (use-package powerline
   :ensure t
-  :init (setq powerline-height 35))
-
-(use-package spaceline
-  :ensure t
-  :init
-  (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
   :config
-  (require 'spaceline-config)
-  (spaceline-spacemacs-theme))
+  (powerline-center-evil-theme))
 
 ;; haskell
 
@@ -199,17 +197,20 @@
 (use-package purescript-mode :ensure t)
 (use-package psc-ide
   :ensure t
-  :config
-  (add-hook 'purescript-mode-hook
-            (lambda ()
-              (psc-ide-mode)
-              (company-mode)
-              (flycheck-mode)
-              (turn-on-purescript-indentation)))
+  :init
+  (progn
+    (add-hook 'purescript-mode-hook 'turn-on-purescript-indentation)
+    (add-hook 'purescript-mode-hook 'psc-ide-mode)
+    (add-hook 'purescript-mode-hook 'company-mode)
+    (add-hook 'purescript-mode-hook 'flycheck-mode))
   :general
   (general-define-key :keymaps 'purescript-mode-map
                       :states '(normal visual)
                       ", s" 'psc-ide-server-start
+                      ", q" 'psc-ide-server-quit
                       ", t" 'psc-ide-show-type
                       ", g g" 'psc-ide-goto-definition
-                      ", a i" 'psc-ide-add-import))
+                      ", a i" 'psc-ide-add-import)
+  :diminish 'purescript-indentation-mode)
+
+(setq debug-on-error nil)
