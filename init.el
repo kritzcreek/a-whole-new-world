@@ -27,7 +27,8 @@
 
 (when (eq system-type 'darwin)
   (setq ring-bell-function 'ignore
-        ns-use-srgb-colorspace nil))
+        ns-use-srgb-colorspace nil
+        ns-right-alternate-modifier nil))
 
 ;; Always ask for y/n keypress instead of typing out 'yes' or 'no'
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -63,6 +64,8 @@
   :config
   (general-evil-setup)
   (setq general-default-keymaps 'evil-normal-state-map)
+  ;; unbind space from dired map to allow for git status
+  (general-define-key :keymaps 'dired-mode-map "SPC" nil)
   (general-nmap "SPC b d" 'kill-this-buffer
                 "SPC b b" 'switch-to-buffer
                 "SPC q"   'save-buffers-kill-terminal
@@ -189,7 +192,20 @@
   :config
   (setq haskell-interactive-popup-error nil))
 
-(use-package intero :ensure t)
+(use-package intero
+  :ensure t
+  :init
+  (add-hook 'haskell-mode-hook 'intero-mode)
+  :general
+  (general-define-key :keymaps 'intero-mode-map
+                      :states '(normal visual)
+                      ", i" 'intero-info
+                      ", t" 'intero-type-at
+                      ", l" 'intero-repl-load
+                      ", c" 'intero-repl-clear-buffer
+                      ", r" 'intero-restart
+                      ", t" 'intero-targets
+                      ", g g" 'intero-goto-definition))
 
 ;; purescript
 
