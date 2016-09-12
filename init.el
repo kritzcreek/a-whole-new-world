@@ -1,5 +1,4 @@
 (setq debug-on-error t)
-(setq use-package-verbose t)
 (setq delete-old-versions -1 )		; delete excess backup versions silently
 (setq version-control t )		; use version control
 (setq vc-make-backup-files t )		; make backups file even when in version controlled dir
@@ -17,13 +16,20 @@
 (blink-cursor-mode 0)
 
 (set-default 'indent-tabs-mode nil)
-(setq sentence-end-double-space nil)
 (setq visible-bell nil)
 ;; Make sure we always use UTF-8.
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 (load-library "iso-transl")
+
+(setq gc-cons-threshold 50000000) ;; allow for more allocated memory before triggering the gc
+(setq line-number-display-limit-width 10000)
+(setq gnutls-min-prime-bits 4096)
+(setq uniquify-buffer-name-style 'forward)
+
+(setq custom-file "~/.emacs.d/etc/custom.el")
+(load custom-file)
 
 (when (eq system-type 'darwin)
   (setq ring-bell-function 'ignore
@@ -43,6 +49,11 @@
 
 ;; Automatically update unmodified buffers whose files have changed.
 (global-auto-revert-mode 1)
+
+(setq mouse-yank-at-point t)
+(setq save-interprogram-paste-before-kill t)
+(setq use-dialog-box nil)
+
 
 (require 'package)
 (setq package-enable-at-startup nil) ; tells emacs not to load any packages before starting up
@@ -87,14 +98,12 @@
     (evil-mode 1)
     (evil-declare-change-repeat 'company-complete)))
 
-;; automatically insert the closing bracket
-(electric-pair-mode)
-;; (use-package evil-surround :ensure t
-;;   :init
-;;   (progn
-;;     (global-evil-surround-mode 1)
-;;     (evil-define-key 'visual evil-surround-mode-map "s" 'evil-surround-region)
-;;     (evil-define-key 'visual evil-surround-mode-map "S" 'evil-substitute)))
+(use-package evil-surround :ensure t
+  :init
+  (progn
+    (global-evil-surround-mode 1)
+    (evil-define-key 'visual evil-surround-mode-map "s" 'evil-surround-region)
+    (evil-define-key 'visual evil-surround-mode-map "S" 'evil-substitute)))
 
 ;; escape on quick fd
 (use-package evil-escape :ensure t
@@ -185,6 +194,41 @@
   :config
   (powerline-center-evil-theme))
 
+(use-package smartparens
+  :ensure t
+  :init
+  (progn
+    (setq sp-message-width nil
+          sp-show-pair-from-inside t
+          sp-autoescape-string-quote nil
+          sp-cancel-autoskip-on-backward-movement nil))
+  :config
+  (progn
+    (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
+    (sp-local-pair 'minibuffer-inactive-mode "`" nil :actions nil)
+    (sp-local-pair 'emacs-lisp-mode "'" nil :actions nil)
+    (sp-local-pair 'emacs-lisp-mode "`" nil :actions nil)
+    (sp-local-pair 'lisp-interaction-mode "'" nil :actions nil)
+    (sp-local-pair 'lisp-interaction-mode "`" nil :actions nil)
+    (sp-local-pair 'scheme-mode "'" nil :actions nil)
+    (sp-local-pair 'scheme-mode "`" nil :actions nil)
+    (sp-local-pair 'inferior-scheme-mode "'" nil :actions nil)
+    (sp-local-pair 'inferior-scheme-mode "`" nil :actions nil)
+
+    (sp-local-pair 'LaTeX-mode "\"" nil :actions nil)
+    (sp-local-pair 'LaTeX-mode "'" nil :actions nil)
+    (sp-local-pair 'LaTeX-mode "`" nil :actions nil)
+    (sp-local-pair 'latex-mode "\"" nil :actions nil)
+    (sp-local-pair 'latex-mode "'" nil :actions nil)
+    (sp-local-pair 'latex-mode "`" nil :actions nil)
+    (sp-local-pair 'TeX-mode "\"" nil :actions nil)
+    (sp-local-pair 'TeX-mode "'" nil :actions nil)
+    (sp-local-pair 'TeX-mode "`" nil :actions nil)
+    (sp-local-pair 'tex-mode "\"" nil :actions nil)
+    (sp-local-pair 'tex-mode "'" nil :actions nil)
+    (sp-local-pair 'tex-mode "`" nil :actions nil))
+    (smartparens-mode)
+    (show-smartparens-mode))
 ;; haskell
 
 (use-package haskell-mode
