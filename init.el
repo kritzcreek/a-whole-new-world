@@ -98,7 +98,8 @@
     (evil-mode 1)
     (evil-declare-change-repeat 'company-complete)))
 
-(use-package evil-surround :ensure t
+(use-package evil-surround
+  :ensure t
   :init
   (progn
     (global-evil-surround-mode 1)
@@ -196,6 +197,7 @@
 
 (use-package smartparens
   :ensure t
+  :diminish smartparens-mode
   :init
   (progn
     (setq sp-message-width nil
@@ -227,8 +229,17 @@
     (sp-local-pair 'tex-mode "\"" nil :actions nil)
     (sp-local-pair 'tex-mode "'" nil :actions nil)
     (sp-local-pair 'tex-mode "`" nil :actions nil))
-    (smartparens-mode)
-    (show-smartparens-mode))
+    (smartparens-global-mode)
+    (show-smartparens-global-mode))
+
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+
 ;; haskell
 
 (use-package haskell-mode
@@ -248,7 +259,7 @@
                       ", l" 'intero-repl-load
                       ", c" 'intero-repl-clear-buffer
                       ", r" 'intero-restart
-                      ", t" 'intero-targets
+                      ", m t" 'intero-targets
                       ", g g" 'intero-goto-definition))
 
 ;; purescript
@@ -269,6 +280,7 @@
                       ", s" 'psc-ide-server-start
                       ", q" 'psc-ide-server-quit
                       ", t" 'psc-ide-show-type
+                      ", b" 'psc-ide-rebuild
                       ", g g" 'psc-ide-goto-definition
                       ", a i" 'psc-ide-add-import)
   :diminish 'purescript-indentation-mode)
