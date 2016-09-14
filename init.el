@@ -265,9 +265,12 @@
 ;; purescript
 
 (use-package flycheck :ensure t)
-(use-package purescript-mode :ensure t)
+(use-package purescript-mode
+  :ensure t
+  :diminish 'purescript-indentation-mode)
 (use-package psc-ide
   :ensure t
+;; :load-path "~/Documents/psc-ide-emacs/"
   :init
   (progn
     (add-hook 'purescript-mode-hook 'turn-on-purescript-indentation)
@@ -282,7 +285,9 @@
                       ", t" 'psc-ide-show-type
                       ", b" 'psc-ide-rebuild
                       ", g g" 'psc-ide-goto-definition
-                      ", a i" 'psc-ide-add-import)
-  :diminish 'purescript-indentation-mode)
+                      ", a i" 'psc-ide-add-import))
+
+(use-package org-ref
+  :ensure t)
 
 (setq debug-on-error nil)
