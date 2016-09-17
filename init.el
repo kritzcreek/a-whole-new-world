@@ -295,4 +295,9 @@
   :init (setq mode-require-final-newline nil)
   :config (global-ethan-wspace-mode 1))
 
+(use-package fill-column-indicator
+  :ensure t
+  :general
+  (general-nmap "SPC t f" 'fci-mode))
+
 (setq debug-on-error nil)
