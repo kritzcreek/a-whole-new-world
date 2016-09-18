@@ -264,7 +264,12 @@
 
 ;; purescript
 
-(use-package flycheck :ensure t)
+(use-package flycheck
+  :ensure t
+  :general
+  (general-nmap
+   "SPC e n" 'flycheck-next-error
+   "SPC e p" 'flycheck-previous-error))
 (use-package purescript-mode
   :ensure t
   :diminish 'purescript-indentation-mode)
