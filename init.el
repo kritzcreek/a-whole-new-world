@@ -293,8 +293,19 @@
                       ", g g" 'psc-ide-goto-definition
                       ", a i" 'psc-ide-add-import))
 
-(use-package org-ref
-  :ensure t)
+(use-package org-ref :ensure t)
+
+(use-package org
+  :mode (("\\.org$" . org-mode))
+  :ensure org-plus-contrib
+  :config
+  (progn
+    ;; config stuff
+    )
+  :general
+  (general-define-key :keymaps 'org-mode-map
+                      :states '(normal visual)
+                      "SPC m e" 'org-export-dispatch))
 
 (use-package ethan-wspace
   :ensure t
