@@ -178,9 +178,10 @@
   :general
   (general-nmap "SPC g s" 'magit-status)
   :config
+  (use-package evil-magit :ensure t)
+  (use-package magithub :ensure t)
   (setq magit-completing-read-function 'ivy-completing-read))
 
-(use-package evil-magit :ensure t)
 
 ;; theme
 (use-package color-theme-sanityinc-tomorrow
