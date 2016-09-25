@@ -77,6 +77,7 @@
   (setq general-default-keymaps 'evil-normal-state-map)
   ;; unbind space from dired map to allow for git status
   (general-define-key :keymaps 'dired-mode-map "SPC" nil)
+  (general-vmap "SPC ;"   'comment-or-uncomment-region)
   (general-nmap "SPC b d" 'kill-this-buffer
                 "SPC b b" 'switch-to-buffer
                 "SPC q"   'save-buffers-kill-terminal
