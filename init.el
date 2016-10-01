@@ -317,6 +317,14 @@
 (use-package fill-column-indicator
   :ensure t
   :general
-  (general-nmap "SPC t f" 'fci-mode))
+  (general-nmap "SPC t f" 'fci-mode)
+  :config
+  (progn
+    (defun kc/on-off-fci-before-company(command)
+      (when (string= "show" command)
+        (turn-off-fci-mode))
+      (when (string= "hide" command)
+        (turn-on-fci-mode)))
+    (advice-add 'company-call-frontends :before #'kc/on-off-fci-before-company)))
 
 (setq debug-on-error nil)
