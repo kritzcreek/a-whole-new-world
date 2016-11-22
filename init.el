@@ -31,9 +31,11 @@
 (setq custom-file "~/.emacs.d/etc/custom.el")
 (load custom-file)
 
+(when (memq system-type '(darwin windows-nt))
+  (setq ring-bell-function 'ignore))
+
 (when (eq system-type 'darwin)
-  (setq ring-bell-function 'ignore
-        ns-use-srgb-colorspace nil
+  (setq ns-use-srgb-colorspace nil
         ns-right-alternate-modifier nil))
 
 ;; Always ask for y/n keypress instead of typing out 'yes' or 'no'
@@ -117,7 +119,8 @@
   :ensure t
   :config
   (setq exec-path-from-shell-check-startup-files nil)
-  (exec-path-from-shell-initialize))
+  (unless (eq system-type 'windows-nt)
+      (exec-path-from-shell-initialize)))
 
 ;; Ivy things
 (use-package ivy
