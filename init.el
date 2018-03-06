@@ -102,6 +102,7 @@
   :ensure t
   :init
   (progn
+    (setq evil-want-C-u-scroll t)
     (evil-mode 1)
     (evil-declare-change-repeat 'company-complete)))
 
@@ -137,9 +138,10 @@
   (setq ivy-height 15)
   (setq ivy-count-format "(%d/%d) ")
   :general
-  (general-define-key  :keymaps 'ivy-minibuffer-map
-                       "C-j" 'ivy-next-line
-                       "C-k" 'ivy-previous-line))
+  (general-define-key
+   :keymaps 'ivy-minibuffer-map
+   "C-j" 'ivy-next-line
+   "C-k" 'ivy-previous-line))
 
 (use-package counsel :ensure t
   :general
@@ -149,7 +151,7 @@
    "SPC h f" 'counsel-describe-function
    "SPC u"   'counsel-unicode-char
    "SPC p f" 'counsel-git
-   "SPC p s" 'counsel-ag
+   "SPC p s" 'counsel-rg
    "SPC SPC" 'counsel-M-x))
 
 
