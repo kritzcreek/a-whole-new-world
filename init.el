@@ -79,15 +79,19 @@
   (setq general-default-keymaps 'evil-normal-state-map)
   ;; unbind space from dired map to allow for git status
   (general-define-key :keymaps 'dired-mode-map "SPC" nil)
-  (general-vmap "SPC ;"   'comment-or-uncomment-region)
-  (general-nmap "SPC b d" 'kill-this-buffer
-                "SPC b b" 'switch-to-buffer
-                "SPC q"   'save-buffers-kill-terminal
-                "SPC a d" 'dired
-                "SPC TAB" 'switch-to-previous-buffer
-                "C-+" 'text-scale-increase
-                "C--" 'text-scale-decrease
-                "C-=" '(lambda () (interactive) (text-scale-set 1))))
+  (general-define-key
+   :keymaps 'visual
+   "SPC ;"   'comment-or-uncomment-region)
+  (general-define-key
+   :keymaps 'normal
+   "SPC b d" 'kill-this-buffer
+   "SPC b b" 'switch-to-buffer
+   "SPC q"   'save-buffers-kill-terminal
+   "SPC a d" 'dired
+   "SPC TAB" 'switch-to-previous-buffer
+   "C-+" 'text-scale-increase
+   "C--" 'text-scale-decrease
+   "C-=" '(lambda () (interactive) (text-scale-set 1))))
 
 (defun switch-to-previous-buffer ()
   (interactive)
@@ -139,17 +143,21 @@
 
 (use-package counsel :ensure t
   :general
-  (general-nmap "SPC f f" 'counsel-find-file
-                "SPC h f" 'counsel-describe-function
-                "SPC u"   'counsel-unicode-char
-                "SPC p f" 'counsel-git
-                "SPC p s" 'counsel-ag
-                "SPC SPC" 'counsel-M-x))
+  (general-define-key
+   :keymaps 'normal
+   "SPC f f" 'counsel-find-file
+   "SPC h f" 'counsel-describe-function
+   "SPC u"   'counsel-unicode-char
+   "SPC p f" 'counsel-git
+   "SPC p s" 'counsel-ag
+   "SPC SPC" 'counsel-M-x))
 
 
 (use-package swiper :ensure t
   :general
-  (general-nmap "SPC s" 'swiper))
+  (general-define-key
+   :keymaps 'normal
+   "SPC s" 'swiper))
 
 (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
 (global-set-key (kbd "<f1> l") 'counsel-load-library)
@@ -180,10 +188,12 @@
 ;; magit
 (use-package magit :ensure t
   :general
-  (general-nmap "SPC g s" 'magit-status)
+  (general-define-key
+   :keymaps 'normal
+   "SPC g s" 'magit-status)
   :config
   (use-package evil-magit :ensure t)
-  (use-package magithub :ensure t)
+  ;; (use-package magithub :ensure t)
   (setq magit-completing-read-function 'ivy-completing-read))
 
 
@@ -272,7 +282,8 @@
 (use-package flycheck
   :ensure t
   :general
-  (general-nmap
+  (general-define-key
+   :keymaps 'normal
    "SPC e n" 'flycheck-next-error
    "SPC e p" 'flycheck-previous-error))
 (use-package purescript-mode
@@ -321,7 +332,9 @@
 (use-package fill-column-indicator
   :ensure t
   :general
-  (general-nmap "SPC t f" 'fci-mode)
+  (general-define-key
+   :keymaps 'normal
+   "SPC t f" 'fci-mode)
   :config
   (progn
     (defun kc/on-off-fci-before-company(command)
