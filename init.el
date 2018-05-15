@@ -178,10 +178,23 @@
   :config
   (global-company-mode)
   :general
-  (general-imap "C-SPC" 'company-complete)
-  (general-define-key :keymaps 'company-active-map
-                      "C-j" 'company-select-next
-                      "C-k" 'company-select-previous))
+  (general-define-key
+   :keymaps 'insert
+   "C-SPC" 'company-complete)
+  (general-define-key
+   :keymaps 'company-active-map
+   "<tab>" 'company-complete-selection
+   "C-j" 'company-select-next
+   "C-k" 'company-select-previous))
+
+(use-package yasnippet
+  :ensure t
+  :config
+  (yas-global-mode)
+  :general
+  (general-define-key
+   :keymaps 'insert
+   "C-M-SPC" 'yas-expand))
 
 (use-package diminish
   :ensure t
@@ -229,10 +242,6 @@
     (sp-local-pair 'emacs-lisp-mode "`" nil :actions nil)
     (sp-local-pair 'lisp-interaction-mode "'" nil :actions nil)
     (sp-local-pair 'lisp-interaction-mode "`" nil :actions nil)
-    (sp-local-pair 'scheme-mode "'" nil :actions nil)
-    (sp-local-pair 'scheme-mode "`" nil :actions nil)
-    (sp-local-pair 'inferior-scheme-mode "'" nil :actions nil)
-    (sp-local-pair 'inferior-scheme-mode "`" nil :actions nil)
 
     (sp-local-pair 'LaTeX-mode "\"" nil :actions nil)
     (sp-local-pair 'LaTeX-mode "'" nil :actions nil)
