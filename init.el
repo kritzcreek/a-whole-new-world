@@ -52,6 +52,9 @@
 ;; Automatically update unmodified buffers whose files have changed.
 (global-auto-revert-mode 1)
 
+(global-display-line-numbers-mode 1)
+(setq display-line-numbers-type 'relative)
+
 (setq mouse-yank-at-point t)
 (setq save-interprogram-paste-before-kill t)
 (setq use-dialog-box nil)
