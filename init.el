@@ -303,6 +303,14 @@
 (use-package purescript-mode
   :ensure t
   :diminish 'purescript-indentation-mode)
+
+(use-package xah-math-input
+  :load-path "~/.emacs.d/lisp"
+  :general
+  (general-define-key
+   :keymaps 'insert
+   "M-SPC" 'xah-math-input-change-to-symbol))
+
 (use-package psc-ide
   :ensure t
 ;; :load-path "~/Documents/psc-ide-emacs/"
