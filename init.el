@@ -216,12 +216,20 @@
 
 
 ;; theme
-(use-package color-theme-sanityinc-tomorrow
+;; (use-package color-theme-sanityinc-tomorrow
+;;   :ensure t
+;;   :config
+;;   (load-theme 'sanityinc-tomorrow-eighties t)
+;;   (set-face-attribute 'default nil :family "PragmataPro")
+;;   (set-face-attribute 'default nil :height 120))
+
+(use-package doom-themes
   :ensure t
+  :preface (defvar region-fg nil)
   :config
-  (load-theme 'sanityinc-tomorrow-eighties t)
+  (load-theme 'doom-dracula t)
   (set-face-attribute 'default nil :family "PragmataPro")
-  (set-face-attribute 'default nil :height 130))
+  (set-face-attribute 'default nil :height 110))
 
 (use-package powerline
   :ensure t
@@ -268,6 +276,10 @@
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
+
+;; haskell
+
+(use-package rust-mode :ensure t)
 
 ;; haskell
 
