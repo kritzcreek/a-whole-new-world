@@ -16,6 +16,7 @@
 (blink-cursor-mode 0)
 
 (set-default 'indent-tabs-mode nil)
+(setq css-indent-offset 2)
 (setq visible-bell nil)
 ;; Make sure we always use UTF-8.
 (set-terminal-coding-system 'utf-8)
@@ -93,12 +94,26 @@
    :keymaps 'normal
    "SPC b d" 'kill-this-buffer
    "SPC b b" 'switch-to-buffer
+   "SPC f d" 'find-user-init-file
+   "SPC f t" 'find-user-todo-file
    "SPC q"   'save-buffers-kill-terminal
    "SPC a d" 'dired
    "SPC TAB" 'switch-to-previous-buffer
    "C-+" 'text-scale-increase
    "C--" 'text-scale-decrease
    "C-=" '(lambda () (interactive) (text-scale-set 1))))
+
+(defun find-user-init-file ()
+  "Edit the `user-init-file', in another window."
+  (interactive)
+  (find-file-other-window user-init-file))
+
+(defconst user-todo-file "~/Dropbox/org/todo.org")
+
+(defun find-user-todo-file ()
+  "Edit the `user-todo-file', in another window."
+  (interactive)
+  (find-file-other-window user-todo-file))
 
 (defun switch-to-previous-buffer ()
   (interactive)
@@ -161,7 +176,6 @@
    "SPC p s" 'counsel-rg
    "SPC SPC" 'counsel-M-x))
 
-
 (use-package swiper :ensure t
   :general
   (general-define-key
@@ -217,6 +231,9 @@
   :config
   (use-package evil-magit :ensure t)
   (setq magit-completing-read-function 'ivy-completing-read))
+
+;; Undo all themes
+;; (mapcar #'disable-theme custom-enabled-themes)
 
 (use-package doom-themes
   :ensure t
@@ -342,13 +359,14 @@
 
 (use-package psc-ide
   :ensure t
-;; :load-path "~/Documents/psc-ide-emacs/"
+  ;; :load-path "~/code/psc-ide-emacs/"
   :init
   (add-hook 'purescript-mode-hook 'kc/purescript-hook)
   :general
   (general-define-key :keymaps 'purescript-mode-map
                       :states '(normal visual)
                       ", s" 'psc-ide-server-start
+                      ", l" 'psc-ide-load-all
                       ", q" 'psc-ide-server-quit
                       ", t" 'psc-ide-show-type
                       ", b" 'psc-ide-rebuild
