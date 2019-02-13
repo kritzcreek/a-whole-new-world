@@ -296,7 +296,12 @@
 
 ;; haskell
 
-(use-package rust-mode :ensure t)
+(use-package rust-mode
+  :ensure t
+  :general
+  (general-define-key :keymaps 'rust-mode-map
+                      :states '(normal visual)
+                      ", c" 'rust-compile))
 
 ;; haskell
 
@@ -342,13 +347,17 @@
 
 (use-package psc-ide
   :ensure t
-  ;; :load-path "~/code/psc-ide-emacs/"
+  :load-path "~/code/psc-ide-emacs/"
   :init
   (progn
     (add-hook 'purescript-mode-hook 'turn-on-purescript-indentation)
     (add-hook 'purescript-mode-hook 'psc-ide-mode)
     (add-hook 'purescript-mode-hook 'company-mode)
     (add-hook 'purescript-mode-hook 'flycheck-mode))
+  :config
+  (progn
+    (setq flycheck-check-syntax-automatically '(mode-enabled save))
+    (setq psc-ide-editor-mode t))
   :general
   (general-define-key :keymaps 'purescript-mode-map
                       :states '(normal visual)
