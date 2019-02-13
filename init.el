@@ -74,6 +74,10 @@
   (package-refresh-contents) ; updage packages archive
   (package-install 'use-package)) ; and install the most recent version of use-package
 
+;; Sane indentation default
+(setq tab-width 2)
+(setq js-indent-level 2)
+
 (require 'use-package)
 
 ;; keybindings
@@ -194,6 +198,7 @@
   :diminish company-mode
   :config
   (global-company-mode)
+  (setq company-idle-delay 0.25)
   :general
   (general-define-key
    :keymaps 'insert
@@ -225,17 +230,7 @@
    "SPC g s" 'magit-status)
   :config
   (use-package evil-magit :ensure t)
-  ;; (use-package magithub :ensure t)
   (setq magit-completing-read-function 'ivy-completing-read))
-
-
-;; theme
-;; (use-package color-theme-sanityinc-tomorrow
-;;   :ensure t
-;;   :config
-;;   (load-theme 'sanityinc-tomorrow-eighties t)
-;;   (set-face-attribute 'default nil :family "PragmataPro")
-;;   (set-face-attribute 'default nil :height 120))
 
 ;; Undo all themes
 ;; (mapcar #'disable-theme custom-enabled-themes)
@@ -246,7 +241,7 @@
   :config
   (load-theme 'doom-dracula t)
   (set-face-attribute 'default nil :family "PragmataPro")
-  (set-face-attribute 'default nil :height 110))
+  (set-face-attribute 'default nil :height 130))
 
 (use-package powerline
   :ensure t
@@ -286,6 +281,15 @@
     (smartparens-global-mode)
     (show-smartparens-global-mode))
 
+(use-package neotree
+  :ensure t
+  :general
+  (general-define-key
+   :keymaps 'normal
+   "SPC f t" 'neotree-toggle))
+
+(use-package restclient :ensure t)
+
 (use-package markdown-mode
   :ensure t
   :commands (markdown-mode gfm-mode)
@@ -294,8 +298,6 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-;; haskell
-
 (use-package rust-mode
   :ensure t
   :general
@@ -303,8 +305,16 @@
                       :states '(normal visual)
                       ", c" 'rust-compile))
 
-;; haskell
+(use-package cargo
+  :ensure t
+  :general
+  (general-define-key :keymaps 'rust-mode-map
+                      :states '(normal visual)
+                      ", c b" 'cargo-process-build
+                      ", c t" 'cargo-process-test
+                      ", c r" 'cargo-process-run))
 
+;; haskell
 (use-package haskell-mode
   :ensure t
   :config
@@ -312,8 +322,8 @@
 
 (use-package intero
   :ensure t
-  :init
-  (add-hook 'haskell-mode-hook 'intero-mode)
+  :config
+  (add-to-list 'intero-blacklist "~/.xmonad/")
   :general
   (general-define-key :keymaps 'intero-mode-map
                       :states '(normal visual)
@@ -326,7 +336,6 @@
                       ", g g" 'intero-goto-definition))
 
 ;; purescript
-
 (use-package flycheck
   :ensure t
   :general
@@ -345,19 +354,19 @@
    :keymaps 'insert
    "M-SPC" 'xah-math-input-change-to-symbol))
 
+(defun kc/purescript-hook ()
+  "My PureScript mode hook"
+  (turn-on-purescript-indentation)
+  (psc-ide-mode)
+  (company-mode)
+  (flycheck-mode)
+  (setq-local flycheck-check-syntax-automatically '(mode-enabled save)))
+
 (use-package psc-ide
   :ensure t
   :load-path "~/code/psc-ide-emacs/"
-  :init
-  (progn
-    (add-hook 'purescript-mode-hook 'turn-on-purescript-indentation)
-    (add-hook 'purescript-mode-hook 'psc-ide-mode)
-    (add-hook 'purescript-mode-hook 'company-mode)
-    (add-hook 'purescript-mode-hook 'flycheck-mode))
-  :config
-  (progn
-    (setq flycheck-check-syntax-automatically '(mode-enabled save))
-    (setq psc-ide-editor-mode t))
+  :init (add-hook 'purescript-mode-hook 'kc/purescript-hook)
+  :config (setq psc-ide-editor-mode t)
   :general
   (general-define-key :keymaps 'purescript-mode-map
                       :states '(normal visual)
@@ -382,10 +391,6 @@
 (use-package org
   :mode (("\\.org$" . org-mode))
   :ensure org-plus-contrib
-  :config
-  (progn
-    ;; config stuff
-    )
   :general
   (general-define-key :keymaps 'org-mode-map
                       :states '(normal visual)
