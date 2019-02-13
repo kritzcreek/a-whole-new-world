@@ -369,6 +369,14 @@
                       ", g g" 'psc-ide-goto-definition
                       ", a i" 'psc-ide-add-import))
 
+(use-package tex-site
+  :ensure auctex
+  :mode ("\\.tex\\'" . TeX-latex-mode))
+
+(use-package company-auctex
+  :defer t
+  :ensure t)
+
 (use-package org-ref :ensure t)
 
 (use-package org
