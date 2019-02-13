@@ -298,12 +298,7 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-(use-package rust-mode
-  :ensure t
-  :general
-  (general-define-key :keymaps 'rust-mode-map
-                      :states '(normal visual)
-                      ", c" 'rust-compile))
+(use-package rust-mode :ensure t)
 
 (use-package cargo
   :ensure t
