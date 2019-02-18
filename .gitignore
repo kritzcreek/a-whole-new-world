@@ -7,3 +7,7 @@
 /projectile-bookmarks.eld
 /magithub
 /server/
+/forge-database.sqlite
+/transient/
+/.cache/
+/.#recentf

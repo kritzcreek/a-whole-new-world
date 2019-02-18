@@ -232,6 +232,8 @@
   (use-package evil-magit :ensure t)
   (setq magit-completing-read-function 'ivy-completing-read))
 
+(use-package forge :ensure t)
+
 ;; Undo all themes
 ;; (mapcar #'disable-theme custom-enabled-themes)
 
@@ -359,7 +361,7 @@
 
 (use-package psc-ide
   :ensure t
-  :load-path "~/code/psc-ide-emacs/"
+  ;; :load-path "~/code/psc-ide-emacs/"
   :init (add-hook 'purescript-mode-hook 'kc/purescript-hook)
   :config (setq psc-ide-editor-mode t)
   :general
