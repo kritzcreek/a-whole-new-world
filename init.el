@@ -232,8 +232,6 @@
   (use-package evil-magit :ensure t)
   (setq magit-completing-read-function 'ivy-completing-read))
 
-(use-package forge :ensure t)
-
 ;; Undo all themes
 ;; (mapcar #'disable-theme custom-enabled-themes)
 
@@ -282,13 +280,6 @@
     (sp-local-pair 'tex-mode "`" nil :actions nil))
     (smartparens-global-mode)
     (show-smartparens-global-mode))
-
-(use-package neotree
-  :ensure t
-  :general
-  (general-define-key
-   :keymaps 'normal
-   "SPC f t" 'neotree-toggle))
 
 (use-package restclient :ensure t)
 
@@ -361,7 +352,7 @@
 
 (use-package psc-ide
   :ensure t
-  ;; :load-path "~/code/psc-ide-emacs/"
+  :load-path "~/code/psc-ide-emacs/"
   :init (add-hook 'purescript-mode-hook 'kc/purescript-hook)
   :config (setq psc-ide-editor-mode t)
   :general
