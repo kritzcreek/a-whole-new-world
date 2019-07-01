@@ -366,6 +366,21 @@
                       ", g g" 'psc-ide-goto-definition
                       ", a i" 'psc-ide-add-import))
 
+;; OCaml
+
+(use-package tuareg :ensure t)
+(use-package merlin :ensure t
+  :config
+  (add-hook 'tuareg-mode-hook 'merlin-mode)
+  (add-hook 'caml-mode-hook 'merlin-mode)
+  :general
+  (general-define-key :keymaps 'merlin-mode-map
+                      :states '(normal visual)
+                      ", t" 'merlin-type-enclosing
+                      ", g g" 'merlin-locate
+                      "SPC e n" 'merlin-error-next
+                      "SPC e p" 'merlin-error-prev))
+
 (use-package tex-site
   :ensure auctex
   :mode ("\\.tex\\'" . TeX-latex-mode))
