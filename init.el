@@ -84,6 +84,10 @@
 
 (require 'use-package)
 
+;; Setting up font and size
+(set-face-attribute 'default nil :family "PragmataPro")
+(set-face-attribute 'default nil :height 160)
+
 ;; keybindings
 (use-package general :ensure t
   :config
@@ -105,7 +109,7 @@
    "SPC TAB" 'switch-to-previous-buffer
    "C-+" 'text-scale-increase
    "C--" 'text-scale-decrease
-   "C-=" '(lambda () (interactive) (text-scale-set 1))))
+   "C-=" '(lambda () (interactive) (text-scale-set 0))))
 
 (defun find-user-init-file ()
   "Edit the `user-init-file', in another window."
@@ -236,16 +240,24 @@
   (use-package evil-magit :ensure t)
   (setq magit-completing-read-function 'ivy-completing-read))
 
+;; Highlighting TODO keywords
+(use-package hl-todo
+  :ensure t
+  :config (global-hl-todo-mode))
+
 ;; Undo all themes
 ;; (mapcar #'disable-theme custom-enabled-themes)
 
-(use-package doom-themes
+(use-package darktooth-theme
   :ensure t
-  :preface (defvar region-fg nil)
   :config
-  (load-theme 'doom-dracula t)
-  (set-face-attribute 'default nil :family "PragmataPro")
-  (set-face-attribute 'default nil :height 130))
+  (load-theme 'darktooth t))
+
+;; (use-package doom-themes
+;;   :ensure t
+;;   :preface (defvar region-fg nil)
+;;   :config
+;;   (load-theme 'doom-dracula t))
 
 (use-package powerline
   :ensure t
@@ -368,6 +380,21 @@
                       ", b" 'psc-ide-rebuild
                       ", g g" 'psc-ide-goto-definition
                       ", a i" 'psc-ide-add-import))
+
+;; OCaml
+
+(use-package tuareg :ensure t)
+(use-package merlin :ensure t
+  :config
+  (add-hook 'tuareg-mode-hook 'merlin-mode)
+  (add-hook 'caml-mode-hook 'merlin-mode)
+  :general
+  (general-define-key :keymaps 'merlin-mode-map
+                      :states '(normal visual)
+                      ", t" 'merlin-type-enclosing
+                      ", g g" 'merlin-locate
+                      "SPC e n" 'merlin-error-next
+                      "SPC e p" 'merlin-error-prev))
 
 (use-package tex-site
   :ensure auctex
