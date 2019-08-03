@@ -167,6 +167,9 @@
   (general-define-key
    :keymaps 'ivy-minibuffer-map
    "C-j" 'ivy-next-line
+   "C-k" 'ivy-previous-line)
+  (general-define-key
+   :keymaps 'ivy-switch-buffer-map
    "C-k" 'ivy-previous-line))
 
 (use-package counsel :ensure t
@@ -383,8 +386,8 @@
 (use-package tuareg :ensure t)
 (use-package merlin :ensure t
   :config
-  (add-hook 'tuareg-mode-hook 'merlin-mode)
-  (add-hook 'caml-mode-hook 'merlin-mode)
+  (add-hook 'tuareg-mode-hook #'merlin-mode)
+  (add-hook 'caml-mode-hook #'merlin-mode)
   :general
   (general-define-key :keymaps 'merlin-mode-map
                       :states '(normal visual)
