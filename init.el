@@ -35,6 +35,10 @@
 (when (memq system-type '(darwin windows-nt))
   (setq ring-bell-function 'ignore))
 
+;; Always start in HOME dir when on Windows, as I never start Emacs
+;; from the terminal here
+(when (memq system-type '(windows-nt)) (cd "~"))
+
 (when (eq system-type 'darwin)
   (setq ns-use-srgb-colorspace nil
         ns-right-alternate-modifier nil))
@@ -315,7 +319,8 @@
                       :states '(normal visual)
                       ", c b" 'cargo-process-build
                       ", c t" 'cargo-process-test
-                      ", c r" 'cargo-process-run))
+                      ", c r" 'cargo-process-run
+                      ", c f" 'cargo-process-fmt))
 
 ;; haskell
 (use-package haskell-mode
@@ -325,10 +330,8 @@
 
 (use-package intero
   :ensure t
-  :config
-  (add-to-list 'intero-blacklist "~/.xmonad/")
   :general
-  (general-define-key :keymaps 'intero-mode-map
+  (general-define-key :keymaps 'haskell-mode-map
                       :states '(normal visual)
                       ", i" 'intero-info
                       ", t" 'intero-type-at
