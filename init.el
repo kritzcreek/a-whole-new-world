@@ -396,6 +396,10 @@
                       "SPC e n" 'merlin-error-next
                       "SPC e p" 'merlin-error-prev))
 
+;; WASM
+(use-package wat-mode
+  :load-path "~/.emacs.d/lisp/wat-mode")
+
 (use-package tex-site
   :ensure auctex
   :mode ("\\.tex\\'" . TeX-latex-mode))
