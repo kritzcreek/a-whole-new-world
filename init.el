@@ -328,19 +328,6 @@
   :config
   (setq haskell-interactive-popup-error nil))
 
-(use-package intero
-  :ensure t
-  :general
-  (general-define-key :keymaps 'haskell-mode-map
-                      :states '(normal visual)
-                      ", i" 'intero-info
-                      ", t" 'intero-type-at
-                      ", l" 'intero-repl-load
-                      ", c" 'intero-repl-clear-buffer
-                      ", r" 'intero-restart
-                      ", m t" 'intero-targets
-                      ", g g" 'intero-goto-definition))
-
 ;; purescript
 (use-package flycheck
   :ensure t
