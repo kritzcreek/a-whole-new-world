@@ -67,10 +67,8 @@
 
 (require 'package)
 (setq package-enable-at-startup nil) ; tells emacs not to load any packages before starting up
-(setq package-archives '(("org"       . "http://orgmode.org/elpa/")
-                         ("gnu"       . "http://elpa.gnu.org/packages/")
-                         ("melpa"     . "https://melpa.org/packages/")
-                         ("marmalade" . "https://marmalade-repo.org/packages/")))
+(setq package-archives '(("elpa" . "http://elpa.gnu.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")))
 (package-initialize)
 
 ;; Bootstrap `use-package'
@@ -239,9 +237,10 @@
   (general-define-key
    :keymaps 'normal
    "SPC g s" 'magit-status)
+  :init (use-package evil-magit :ensure t)
   :config
-  (use-package evil-magit :ensure t)
   (setq magit-completing-read-function 'ivy-completing-read))
+
 
 ;; Highlighting TODO keywords
 (use-package hl-todo
