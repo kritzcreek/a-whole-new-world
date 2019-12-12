@@ -376,6 +376,8 @@
 (use-package wat-mode
   :load-path "~/.emacs.d/lisp/wat-mode")
 
+(use-package idris-mode :ensure t)
+
 (use-package tex-site
   :ensure auctex
   :mode ("\\.tex\\'" . TeX-latex-mode))
