@@ -26,7 +26,6 @@
 
 (setq gc-cons-threshold 50000000) ;; allow for more allocated memory before triggering the gc
 (setq line-number-display-limit-width 10000)
-(setq gnutls-min-prime-bits 4096)
 (setq uniquify-buffer-name-style 'forward)
 
 (setq custom-file "~/.emacs.d/etc/custom.el")
@@ -62,7 +61,6 @@
 (setq mouse-yank-at-point t)
 (setq save-interprogram-paste-before-kill t)
 (setq use-dialog-box nil)
-
 
 (require 'package)
 (setq package-enable-at-startup nil) ; tells emacs not to load any packages before starting up
@@ -282,21 +280,18 @@
     (sp-local-pair 'emacs-lisp-mode "`" nil :actions nil)
     (sp-local-pair 'lisp-interaction-mode "'" nil :actions nil)
     (sp-local-pair 'lisp-interaction-mode "`" nil :actions nil)
+    (sp-local-pair 'purescript-mode "\\{" nil :actions nil)
 
-    (sp-local-pair 'LaTeX-mode "\"" nil :actions nil)
-    (sp-local-pair 'LaTeX-mode "'" nil :actions nil)
-    (sp-local-pair 'LaTeX-mode "`" nil :actions nil)
-    (sp-local-pair 'latex-mode "\"" nil :actions nil)
-    (sp-local-pair 'latex-mode "'" nil :actions nil)
-    (sp-local-pair 'latex-mode "`" nil :actions nil)
-    (sp-local-pair 'TeX-mode "\"" nil :actions nil)
-    (sp-local-pair 'TeX-mode "'" nil :actions nil)
-    (sp-local-pair 'TeX-mode "`" nil :actions nil)
-    (sp-local-pair 'tex-mode "\"" nil :actions nil)
-    (sp-local-pair 'tex-mode "'" nil :actions nil)
-    (sp-local-pair 'tex-mode "`" nil :actions nil))
     (smartparens-global-mode)
-    (show-smartparens-global-mode))
+    (show-smartparens-global-mode)))
+
+(use-package flycheck
+  :ensure t
+  :general
+  (general-define-key
+   :keymaps 'normal
+   "SPC e n" 'flycheck-next-error
+   "SPC e p" 'flycheck-previous-error))
 
 (use-package restclient :ensure t)
 
@@ -327,13 +322,6 @@
   (setq haskell-interactive-popup-error nil))
 
 ;; purescript
-(use-package flycheck
-  :ensure t
-  :general
-  (general-define-key
-   :keymaps 'normal
-   "SPC e n" 'flycheck-next-error
-   "SPC e p" 'flycheck-previous-error))
 (use-package purescript-mode
   :ensure t
   :diminish 'purescript-indentation-mode)
