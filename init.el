@@ -215,6 +215,27 @@
    "C-j" 'company-select-next
    "C-k" 'company-select-previous))
 
+(use-package org-present :ensure t
+  :general
+  (general-define-key
+   :keymaps 'org-present-mode-keymap
+   :states '(normal visual)
+   "<right>" 'org-present-next
+   "<left>" 'org-present-prev
+   ", q" 'org-present-quit)
+  :config
+  (add-hook 'org-present-mode-hook
+            (lambda ()
+              (org-present-big)
+              (org-display-inline-images)
+              (org-present-hide-cursor)))
+  (add-hook 'org-present-mode-quit-hook
+            (lambda ()
+              (org-present-small)
+              (org-remove-inline-images)
+              (org-present-show-cursor)
+              (org-present-read-write))))
+
 (use-package yasnippet
   :ensure t
   :config
