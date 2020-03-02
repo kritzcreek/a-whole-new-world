@@ -65,7 +65,7 @@
 (require 'package)
 (setq package-enable-at-startup nil) ; tells emacs not to load any packages before starting up
 (setq package-archives '(("elpa" . "http://elpa.gnu.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")))
+                         ("melpa" . "http://melpa.org/packages/")))
 (package-initialize)
 
 ;; Bootstrap `use-package'
