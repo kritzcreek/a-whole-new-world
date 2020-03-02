@@ -249,6 +249,7 @@
   :ensure t
   :config
   (diminish 'undo-tree-mode))
+
 ;; magit
 (use-package magit :ensure t
   :general
@@ -259,7 +260,6 @@
   :config
   (setq magit-completing-read-function 'ivy-completing-read))
 
-
 ;; Highlighting TODO keywords
 (use-package hl-todo
   :ensure t
@@ -267,22 +267,18 @@
 
 ;; Undo all themes
 ;; (mapcar #'disable-theme custom-enabled-themes)
+;; (load-theme 'leuven t)
+;; (load-theme 'doom-nord t)
 
-(use-package darktooth-theme
+(use-package doom-themes
   :ensure t
-  :config
-  (load-theme 'darktooth t))
+  :preface (defvar region-fg nil)
+  :config (load-theme 'doom-city-lights t))
 
-;; (use-package doom-themes
-;;   :ensure t
-;;   :preface (defvar region-fg nil)
-;;   :config
-;;   (load-theme 'doom-dracula t))
-
-(use-package powerline
-  :ensure t
-  :config
-  (powerline-center-evil-theme))
+(use-package all-the-icons :ensure t)
+(use-package doom-modeline
+      :ensure t
+      :hook (after-init . doom-modeline-mode))
 
 (use-package smartparens
   :ensure t
