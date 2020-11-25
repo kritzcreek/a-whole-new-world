@@ -268,12 +268,10 @@
 ;; Undo all themes
 ;; (mapcar #'disable-theme custom-enabled-themes)
 ;; (load-theme 'leuven t)
-;; (load-theme 'doom-nord t)
 
 (use-package doom-themes
   :ensure t
-  :preface (defvar region-fg nil)
-  :config (load-theme 'doom-city-lights t))
+  :config (load-theme 'doom-moonlight t))
 
 (use-package all-the-icons :ensure t)
 (use-package doom-modeline
