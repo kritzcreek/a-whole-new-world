@@ -102,6 +102,7 @@
    "SPC q"   'save-buffers-kill-terminal
    "SPC a d" 'dired
    "SPC TAB" 'switch-to-previous-buffer
+   "SPC t f" 'display-fill-column-indicator-mode
    "C-+" 'text-scale-increase
    "C--" 'text-scale-decrease
    "C-=" '(lambda () (interactive) (text-scale-set 0))))
@@ -320,6 +321,15 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
+(use-package lsp-mode
+    :ensure t
+    :hook ((rust-mode . lsp)
+           (lsp-mode . lsp-enable-which-key-integration))
+    :commands lsp)
+
+;; optionally
+(use-package lsp-ui :ensure t :commands lsp-ui-mode)
+
 (use-package rust-mode :ensure t)
 
 (use-package cargo
@@ -362,7 +372,9 @@
   :ensure t
   ;; :load-path "~/code/psc-ide-emacs/"
   :init (add-hook 'purescript-mode-hook 'kc/purescript-hook)
-  :config (setq psc-ide-editor-mode t)
+  :config
+  (setq psc-ide-debug t
+        psc-ide-use-npm-bin t)
   :general
   (general-define-key :keymaps 'purescript-mode-map
                       :states '(normal visual)
@@ -409,20 +421,5 @@
   :init (setq mode-require-final-newline nil
               require-final-newline nil)
   :config (global-ethan-wspace-mode 1))
-
-(use-package fill-column-indicator
-  :ensure t
-  :general
-  (general-define-key
-   :keymaps 'normal
-   "SPC t f" 'fci-mode)
-  :config
-  (progn
-    (defun kc/on-off-fci-before-company(command)
-      (when (string= "show" command)
-        (turn-off-fci-mode))
-      (when (string= "hide" command)
-        (turn-on-fci-mode)))
-    (advice-add 'company-call-frontends :before #'kc/on-off-fci-before-company)))
 
 (setq debug-on-error nil)
