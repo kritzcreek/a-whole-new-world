@@ -216,26 +216,25 @@
    "C-j" 'company-select-next
    "C-k" 'company-select-previous))
 
-(use-package org-present :ensure t
-  :general
-  (general-define-key
-   :keymaps 'org-present-mode-keymap
-   :states '(normal visual)
-   "<right>" 'org-present-next
-   "<left>" 'org-present-prev
-   ", q" 'org-present-quit)
+(use-package org-tree-slide :ensure t
   :config
-  (add-hook 'org-present-mode-hook
-            (lambda ()
-              (org-present-big)
-              (org-display-inline-images)
-              (org-present-hide-cursor)))
-  (add-hook 'org-present-mode-quit-hook
-            (lambda ()
-              (org-present-small)
-              (org-remove-inline-images)
-              (org-present-show-cursor)
-              (org-present-read-write))))
+  (general-define-key
+   :keymaps 'org-tree-slide-mode-map
+   :state '(normal visual)
+   "C-<right>" 'org-tree-slide-move-next-tree
+   "C-<left>" 'org-tree-slide-move-previous-tree)
+  (general-define-key
+   :state '(normal visual)
+   "SPC t p" 'org-tree-slide-mode)
+  (add-hook
+   'org-tree-slide-play-hook
+   (lambda ()
+     (text-scale-increase 5)
+     (org-tree-slide-presentation-profile)
+     (org-redisplay-inline-images)))
+  (add-hook
+   'org-tree-slide-stop-hook
+   (lambda () (text-scale-set 0))))
 
 (use-package yasnippet
   :ensure t
