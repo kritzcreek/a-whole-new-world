@@ -100,6 +100,7 @@
    "SPC f d" 'find-user-init-file
    "SPC f t" 'find-user-todo-file
    "SPC q"   'save-buffers-kill-terminal
+   "SPC p f" 'project-find-file
    "SPC a d" 'dired
    "SPC TAB" 'switch-to-previous-buffer
    "SPC t f" 'display-fill-column-indicator-mode
@@ -179,7 +180,6 @@
    "SPC f f" 'counsel-find-file
    "SPC h f" 'counsel-describe-function
    "SPC u"   'counsel-unicode-char
-   "SPC p f" 'counsel-git
    "SPC p s" 'counsel-rg
    "SPC SPC" 'counsel-M-x))
 
