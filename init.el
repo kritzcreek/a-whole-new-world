@@ -273,10 +273,10 @@
   :ensure t
   :config (load-theme 'doom-moonlight t))
 
-(use-package all-the-icons :ensure t)
 (use-package doom-modeline
-      :ensure t
-      :hook (after-init . doom-modeline-mode))
+  :ensure t
+  :config (setq doom-modeline-icon nil)
+  :hook (after-init . doom-modeline-mode))
 
 (use-package smartparens
   :ensure t
