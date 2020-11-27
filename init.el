@@ -256,9 +256,10 @@
   (general-define-key
    :keymaps 'normal
    "SPC g s" 'magit-status)
-  :init (use-package evil-magit :ensure t)
   :config
   (setq magit-completing-read-function 'ivy-completing-read))
+
+(use-package evil-magit :ensure t)
 
 ;; Highlighting TODO keywords
 (use-package hl-todo
