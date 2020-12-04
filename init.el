@@ -334,12 +334,13 @@
 (use-package cargo
   :ensure t
   :general
-  (general-define-key :keymaps 'rust-mode-map
-                      :states '(normal visual)
-                      ", c b" 'cargo-process-build
-                      ", c t" 'cargo-process-test
-                      ", c r" 'cargo-process-run
-                      ", c f" 'cargo-process-fmt))
+  (general-define-key
+   :keymaps 'rust-mode-map
+   :states '(normal visual)
+   ", c b" 'cargo-process-build
+   ", c t" 'cargo-process-test
+   ", c r" 'cargo-process-run
+   ", c f" 'cargo-process-fmt))
 
 ;; haskell
 (use-package haskell-mode
@@ -375,15 +376,16 @@
   (setq psc-ide-debug t
         psc-ide-use-npm-bin t)
   :general
-  (general-define-key :keymaps 'purescript-mode-map
-                      :states '(normal visual)
-                      ", s" 'psc-ide-server-start
-                      ", l" 'psc-ide-load-all
-                      ", q" 'psc-ide-server-quit
-                      ", t" 'psc-ide-show-type
-                      ", b" 'psc-ide-rebuild
-                      ", g g" 'psc-ide-goto-definition
-                      ", a i" 'psc-ide-add-import))
+  (general-define-key
+   :keymaps 'purescript-mode-map
+   :states '(normal visual)
+   ", s" 'psc-ide-server-start
+   ", l" 'psc-ide-load-all
+   ", q" 'psc-ide-server-quit
+   ", t" 'psc-ide-show-type
+   ", b" 'psc-ide-rebuild
+   ", g g" 'psc-ide-goto-definition
+   ", a i" 'psc-ide-add-import))
 
 ;; OCaml
 
@@ -393,12 +395,13 @@
   (add-hook 'tuareg-mode-hook #'merlin-mode)
   (add-hook 'caml-mode-hook #'merlin-mode)
   :general
-  (general-define-key :keymaps 'merlin-mode-map
-                      :states '(normal visual)
-                      ", t" 'merlin-type-enclosing
-                      ", g g" 'merlin-locate
-                      "SPC e n" 'merlin-error-next
-                      "SPC e p" 'merlin-error-prev))
+  (general-define-key
+   :keymaps 'merlin-mode-map
+   :states '(normal visual)
+   ", t" 'merlin-type-enclosing
+   ", g g" 'merlin-locate
+   "SPC e n" 'merlin-error-next
+   "SPC e p" 'merlin-error-prev))
 
 ;; WASM
 (use-package wat-mode
