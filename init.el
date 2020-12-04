@@ -22,7 +22,6 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
-(load-library "iso-transl")
 
 (setq gc-cons-threshold 50000000) ;; allow for more allocated memory before triggering the gc
 (setq line-number-display-limit-width 10000)
