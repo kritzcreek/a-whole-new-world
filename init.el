@@ -99,7 +99,6 @@
    "SPC f d" 'find-user-init-file
    "SPC f t" 'find-user-todo-file
    "SPC q"   'save-buffers-kill-terminal
-   "SPC p f" 'project-find-file
    "SPC a d" 'dired
    "SPC TAB" 'switch-to-previous-buffer
    "SPC t f" 'display-fill-column-indicator-mode
@@ -191,6 +190,14 @@
 (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
 (global-set-key (kbd "<f1> l") 'counsel-load-library)
 (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+
+(use-package project :ensure t
+  :pin elpa
+  :general
+  (general-define-key
+   :keymaps 'normal
+   "SPC p p" 'project-switch-project
+   "SPC p f" 'project-find-file))
 
 ;; which-key
 (use-package which-key :ensure t
