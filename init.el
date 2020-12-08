@@ -127,7 +127,9 @@
   :ensure t
   :init
   (progn
-    (setq evil-want-C-u-scroll t)
+    (setq
+     evil-want-C-u-scroll t
+     evil-undo-system 'undo-tree)
     (evil-mode 1)
     (evil-declare-change-repeat 'company-complete)))
 
@@ -251,10 +253,12 @@
    :keymaps 'insert
    "C-M-SPC" 'yas-expand))
 
-(use-package diminish
+(use-package undo-tree
   :ensure t
-  :config
-  (diminish 'undo-tree-mode))
+  :config (global-undo-tree-mode)
+  :diminish undo-tree-mode)
+
+(use-package diminish :ensure t)
 
 ;; magit
 (use-package magit :ensure t
