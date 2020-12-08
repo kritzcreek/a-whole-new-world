@@ -37,10 +37,6 @@
 ;; from the terminal here
 (when (memq system-type '(windows-nt)) (cd "~"))
 
-(when (eq system-type 'darwin)
-  (setq ns-use-srgb-colorspace nil
-        ns-right-alternate-modifier nil))
-
 ;; Always ask for y/n keypress instead of typing out 'yes' or 'no'
 (defalias 'yes-or-no-p 'y-or-n-p)
 
