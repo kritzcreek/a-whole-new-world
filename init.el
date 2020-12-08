@@ -73,9 +73,18 @@
 
 (require 'use-package)
 
+(defvar kc/font-family "PragmataPro")
+(defvar kc/font-size 150)
+(defconst kc/local-conf-file
+  (downcase (format "~/.emacs.d/init-%s.el" (system-name))))
+
+(when (file-exists-p kc/local-conf-file)
+  (message "Applying local overrides")
+  (load kc/local-conf-file))
+
 ;; Setting up font and size
-(set-face-attribute 'default nil :family "PragmataPro")
-(set-face-attribute 'default nil :height 160)
+(set-face-attribute 'default nil :family kc/font-family)
+(set-face-attribute 'default nil :height kc/font-size)
 
 ;; keybindings
 (use-package general :ensure t
@@ -325,14 +334,14 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-(use-package lsp-mode
-    :ensure t
-    :hook ((rust-mode . lsp)
-           (lsp-mode . lsp-enable-which-key-integration))
-    :commands lsp)
+;; (use-package lsp-mode
+;;     :ensure t
+;;     :hook ((rust-mode . lsp)
+;;            (lsp-mode . lsp-enable-which-key-integration))
+;;     :commands lsp)
 
-;; optionally
-(use-package lsp-ui :ensure t :commands lsp-ui-mode)
+;; ;; optionally
+;; (use-package lsp-ui :ensure t :commands lsp-ui-mode)
 
 (use-package rust-mode :ensure t)
 
