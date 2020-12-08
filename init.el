@@ -75,6 +75,8 @@
 
 (defvar kc/font-family "PragmataPro")
 (defvar kc/font-size 150)
+;; Allows per-machine config by loading the `init-$HOSTNAME.el` file
+;; on startup
 (defconst kc/local-conf-file
   (downcase (format "~/.emacs.d/init-%s.el" (system-name))))
 
