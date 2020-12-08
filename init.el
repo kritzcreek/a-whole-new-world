@@ -16,7 +16,6 @@
 (blink-cursor-mode 0)
 
 (set-default 'indent-tabs-mode nil)
-(setq css-indent-offset 2)
 (setq visible-bell nil)
 ;; Make sure we always use UTF-8.
 (set-terminal-coding-system 'utf-8)
