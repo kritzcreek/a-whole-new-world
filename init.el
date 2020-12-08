@@ -102,29 +102,29 @@
    :keymaps 'normal
    "SPC b d" 'kill-this-buffer
    "SPC b b" 'switch-to-buffer
-   "SPC f d" 'find-user-init-file
-   "SPC f t" 'find-user-todo-file
+   "SPC f d" 'kc/find-user-init-file
+   "SPC f t" 'kc/find-user-todo-file
    "SPC q"   'save-buffers-kill-terminal
    "SPC a d" 'dired
-   "SPC TAB" 'switch-to-previous-buffer
+   "SPC TAB" 'kc/switch-to-previous-buffer
    "SPC t f" 'display-fill-column-indicator-mode
    "C-+" 'text-scale-increase
    "C--" 'text-scale-decrease
    "C-=" '(lambda () (interactive) (text-scale-set 0))))
 
-(defun find-user-init-file ()
+(defun kc/find-user-init-file ()
   "Edit the `user-init-file', in another window."
   (interactive)
   (find-file-other-window user-init-file))
 
-(defconst user-todo-file "~/Dropbox/org/todo.org")
+(defconst kc/user-todo-file "~/Dropbox/org/todo.org")
 
-(defun find-user-todo-file ()
+(defun kc/find-user-todo-file ()
   "Edit the `user-todo-file', in another window."
   (interactive)
-  (find-file-other-window user-todo-file))
+  (find-file-other-window kc/user-todo-file))
 
-(defun switch-to-previous-buffer ()
+(defun kc/switch-to-previous-buffer ()
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
