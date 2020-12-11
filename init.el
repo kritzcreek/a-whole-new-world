@@ -390,7 +390,7 @@
   ;; :load-path "~/code/psc-ide-emacs/"
   :init (add-hook 'purescript-mode-hook 'kc/purescript-hook)
   :config
-  (setq psc-ide-debug t
+  (setq ;; psc-ide-debug t
         psc-ide-use-npm-bin t)
   :general
   (general-define-key
