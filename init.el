@@ -364,17 +364,18 @@
   :config
   (setq haskell-interactive-popup-error nil))
 
-;; purescript
-(use-package purescript-mode
-  :ensure t
-  :diminish 'purescript-indentation-mode)
-
+;; Unicode input
 (use-package xah-math-input
   :load-path "~/.emacs.d/lisp"
   :general
   (general-define-key
    :keymaps 'insert
    "M-SPC" 'xah-math-input-change-to-symbol))
+
+;; purescript
+(use-package purescript-mode
+  :ensure t
+  :diminish 'purescript-indentation-mode)
 
 (defun kc/purescript-hook ()
   "My PureScript mode hook"
