@@ -23,6 +23,7 @@
 (prefer-coding-system 'utf-8)
 
 (setq gc-cons-threshold 50000000) ;; allow for more allocated memory before triggering the gc
+(setq read-process-output-max (* 1024 1024)) ;; bigger chunk-size when reading from network processes (LSP, purs ide)
 (setq line-number-display-limit-width 10000)
 (setq uniquify-buffer-name-style 'forward)
 
