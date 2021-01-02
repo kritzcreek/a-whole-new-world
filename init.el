@@ -231,6 +231,8 @@
    "C-j" 'company-select-next
    "C-k" 'company-select-previous))
 
+(use-package org-tempo :after (org))
+
 (use-package org-tree-slide :ensure t
   :config
   (general-define-key
