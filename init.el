@@ -1,15 +1,21 @@
 (setq debug-on-error t)
 (setq delete-old-versions -1 ); delete excess backup versions silently
-(setq version-control t ); use version control
+(setq version-control t); use version control
 (setq vc-make-backup-files t ); make backups file even when in version controlled dir
 (setq backup-directory-alist `(("." . "~/.emacs.d/backups")) ) ; which directory to put backups file
 (setq vc-follow-symlinks t ); don't ask for confirmation when opening symlinked file
 (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)) ) ;transform backups file name
-(setq inhibit-startup-screen t ); inhibit useless and old-school startup screen
-(setq coding-system-for-write 'utf-8 )
+
+(setq inhibit-startup-screen t); inhibit useless and old-school startup screen
+(setq inhibit-startup-message t)
+(setq inhibit-startup-echo-area-message t)
+(setq initial-scratch-message nil)
+(setq initial-buffer-choice nil)
+
 (setq sentence-end-double-space nil); sentence SHOULD end with only a point.
 (setq fill-column 80); toggle wrapping text at the 80th character
-(setq initial-scratch-message "Welcome in Emacs") ; print a default message in the empty scratch buffer opened at startupa
+(setq frame-title-format nil)
+(setq indicate-empty-lines nil)
 (scroll-bar-mode 0)
 (menu-bar-mode 0)
 (tool-bar-mode 0)
@@ -18,9 +24,12 @@
 (set-default 'indent-tabs-mode nil)
 (setq visible-bell nil)
 ;; Make sure we always use UTF-8.
+(setq coding-system-for-write 'utf-8 )
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
+(set-language-environment 'utf-8)
 
 (setq gc-cons-threshold 50000000) ;; allow for more allocated memory before triggering the gc
 (setq read-process-output-max (* 1024 1024)) ;; bigger chunk-size when reading from network processes (LSP, purs ide)
@@ -75,7 +84,8 @@
 (require 'use-package)
 
 (defvar kc/font-family "PragmataPro")
-(defvar kc/font-size 150)
+(defvar kc/font-style "Regular")
+(defvar kc/font-size 16)
 ;; Allows per-machine config by loading the `init-$HOSTNAME.el` file
 ;; on startup
 (defconst kc/local-conf-file
@@ -86,8 +96,10 @@
   (load kc/local-conf-file))
 
 ;; Setting up font and size
-(set-face-attribute 'default nil :family kc/font-family)
-(set-face-attribute 'default nil :height kc/font-size)
+(set-face-attribute
+ 'default
+ nil
+ :font (format "%s:style=%s:size=%s" kc/font-family kc/font-style kc/font-size))
 
 ;; keybindings
 (use-package general :ensure t
@@ -169,8 +181,8 @@
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
-  (setq ivy-height 15)
-  (setq ivy-count-format "(%d/%d) ")
+  (setq ivy-height 6)
+  (setq ivy-count-format "")
   :general
   (general-define-key
    :keymaps 'ivy-minibuffer-map
@@ -185,6 +197,7 @@
   (general-define-key
    :keymaps 'normal
    "SPC f f" 'counsel-find-file
+   "SPC f r" 'counsel-recentf
    "SPC h f" 'counsel-describe-function
    "SPC u"   'counsel-unicode-char
    "SPC p s" 'counsel-rg
@@ -195,10 +208,6 @@
   (general-define-key
    :keymaps 'normal
    "SPC s" 'swiper))
-
-(global-set-key (kbd "<f1> v") 'counsel-describe-variable)
-(global-set-key (kbd "<f1> l") 'counsel-load-library)
-(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
 
 (use-package project :ensure t
   :pin elpa
@@ -280,7 +289,6 @@
 
 (use-package evil-magit :ensure t)
 
-;; Highlighting TODO keywords
 (use-package hl-todo
   :ensure t
   :config (global-hl-todo-mode))
@@ -289,14 +297,15 @@
 ;; (mapcar #'disable-theme custom-enabled-themes)
 ;; (load-theme 'leuven t)
 
-(use-package doom-themes
-  :ensure t
-  :config (load-theme 'doom-moonlight t))
+;; Disabled themes and modeline for now because I'm using the nano emacs stuff
+;; (use-package doom-themes
+;;   :ensure t
+;;   :config (load-theme 'doom-horizon t))
 
-(use-package doom-modeline
-  :ensure t
-  :config (setq doom-modeline-icon nil)
-  :hook (after-init . doom-modeline-mode))
+;; (use-package doom-modeline
+;;   :ensure t
+;;   :config (setq doom-modeline-icon nil)
+;;   :hook (after-init . doom-modeline-mode))
 
 (use-package smartparens
   :ensure t
@@ -339,27 +348,16 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-;; (use-package lsp-mode
-;;     :ensure t
-;;     :hook ((rust-mode . lsp)
-;;            (lsp-mode . lsp-enable-which-key-integration))
-;;     :commands lsp)
+(use-package lsp-mode
+    :ensure t
+    :hook ((rust-mode . lsp)
+           (lsp-mode . lsp-enable-which-key-integration))
+    :commands lsp)
 
 ;; ;; optionally
-;; (use-package lsp-ui :ensure t :commands lsp-ui-mode)
+(use-package lsp-ui :ensure t :commands lsp-ui-mode)
 
 (use-package rust-mode :ensure t)
-
-(use-package cargo
-  :ensure t
-  :general
-  (general-define-key
-   :keymaps 'rust-mode-map
-   :states '(normal visual)
-   ", c b" 'cargo-process-build
-   ", c t" 'cargo-process-test
-   ", c r" 'cargo-process-run
-   ", c f" 'cargo-process-fmt))
 
 ;; haskell
 (use-package haskell-mode
@@ -443,5 +441,23 @@
   :init (setq mode-require-final-newline nil
               require-final-newline nil)
   :config (global-ethan-wspace-mode 1))
+
+;; trying out some nano emacs stuff
+
+(add-to-list 'load-path "~/.emacs.d/nano-emacs")
+
+(require 'nano-faces)
+(nano-faces)
+
+(require 'nano-theme)
+(nano-theme)
+
+;; Nano header & mode lines (optional)
+(require 'nano-modeline)
+
+(require 'nano-splash)
+
+(require 'nano-layout)
+(require 'nano-writer)
 
 (setq debug-on-error nil)

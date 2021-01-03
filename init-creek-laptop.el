@@ -1,2 +1,3 @@
 (setq kc/font-family "Cascadia Code")
-(setq kc/font-size 140)
+(setq kc/font-style Light)
+(setq kc/font-size 14)

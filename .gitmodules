@@ -1,0 +1,3 @@
+[submodule "nano-emacs"]
+	path = nano-emacs
+	url = git://github.com/kritzcreek/nano-emacs.git
