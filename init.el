@@ -56,7 +56,6 @@
 ;; Make the selection work like most people expect.
 (delete-selection-mode t)
 (transient-mark-mode t)
-
 ;; Automatically update unmodified buffers whose files have changed.
 (global-auto-revert-mode 1)
 
@@ -181,7 +180,7 @@
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
-  (setq ivy-height 6)
+  (setq ivy-height 10)
   (setq ivy-count-format "")
   :general
   (general-define-key
