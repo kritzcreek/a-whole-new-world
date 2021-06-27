@@ -1,3 +1,3 @@
-(setq kc/font-family "PragmataPro")
-(setq kc/font-style "Regular")
-(setq kc/font-size 16)
+(setq kc/font-family "Roboto Mono")
+(setq kc/font-style "Light")
+(setq kc/font-size 18)
