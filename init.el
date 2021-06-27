@@ -240,6 +240,10 @@
    "C-j" 'company-select-next
    "C-k" 'company-select-previous))
 
+(use-package company-quickhelp :ensure t
+  :after (company)
+  :config (company-quickhelp-mode))
+
 (use-package org-tempo :after (org))
 
 (use-package org-tree-slide :ensure t
