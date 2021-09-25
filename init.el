@@ -9,11 +9,14 @@
 (setq coding-system-for-write 'utf-8 )
 (setq sentence-end-double-space nil); sentence SHOULD end with only a point.
 (setq fill-column 80); toggle wrapping text at the 80th character
-(setq initial-scratch-message "Welcome in Emacs") ; print a default message in the empty scratch buffer opened at startupa
-(scroll-bar-mode 0)
+(setq initial-scratch-message "Cheers love, the cavalry's here!") ; print a default message in the empty scratch buffer opened at startup
+
+(if (display-graphic-p)
+    (scroll-bar-mode 0)
+  (setq-default cursor-type 'bar))
+(blink-cursor-mode 0)
 (menu-bar-mode 0)
 (tool-bar-mode 0)
-(blink-cursor-mode 0)
 
 (set-default 'indent-tabs-mode nil)
 (setq visible-bell nil)
@@ -136,9 +139,14 @@
   (progn
     (setq
      evil-want-C-u-scroll t
+     evil-want-keybinding nil
      evil-undo-system 'undo-tree)
     (evil-mode 1)
     (evil-declare-change-repeat 'company-complete)))
+
+(use-package evil-collection :ensure t
+  :after evil
+  :config (evil-collection-init '(magit)))
 
 (use-package evil-surround
   :ensure t
@@ -277,8 +285,6 @@
    "SPC g s" 'magit-status)
   :config
   (setq magit-completing-read-function 'ivy-completing-read))
-
-(use-package evil-magit :ensure t)
 
 ;; Highlighting TODO keywords
 (use-package hl-todo
