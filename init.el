@@ -146,7 +146,7 @@
 
 (use-package evil-collection :ensure t
   :after evil
-  :config (evil-collection-init '(magit)))
+  :config (evil-collection-init '(magit dired)))
 
 (use-package evil-surround
   :ensure t
@@ -239,6 +239,11 @@
    "C-j" 'company-select-next
    "C-k" 'company-select-previous))
 
+(use-package company-quickhelp
+  :ensure t
+  :after company
+  :config (company-quickhelp-mode))
+
 (use-package org-tempo :after (org))
 
 (use-package org-tree-slide :ensure t
@@ -297,7 +302,8 @@
 
 (use-package doom-themes
   :ensure t
-  :config (load-theme 'doom-moonlight t))
+;;  :config (load-theme 'doom-moonlight t)) ;; dark
+  :config (load-theme 'doom-spacegrey t)) ;; light
 
 (use-package doom-modeline
   :ensure t
@@ -345,14 +351,19 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-;; (use-package lsp-mode
-;;     :ensure t
-;;     :hook ((rust-mode . lsp)
-;;            (lsp-mode . lsp-enable-which-key-integration))
-;;     :commands lsp)
+(use-package lsp-mode
+  :ensure t
+  :config (setq lsp-rust-server 'rust-analyzer)
+  :hook ((rust-mode . lsp)
+         (typescript-mode . lsp)
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
 
-;; ;; optionally
+;; optionally
 ;; (use-package lsp-ui :ensure t :commands lsp-ui-mode)
+
+(use-package typescript-mode :ensure t
+  :config (setq typescript-indent-level 2))
 
 (use-package rust-mode :ensure t)
 
@@ -365,7 +376,9 @@
    ", c b" 'cargo-process-build
    ", c t" 'cargo-process-test
    ", c r" 'cargo-process-run
-   ", c f" 'cargo-process-fmt))
+   ", c f" 'cargo-process-fmt
+   ", a" 'lsp-execute-code-action
+   ))
 
 ;; haskell
 (use-package haskell-mode
