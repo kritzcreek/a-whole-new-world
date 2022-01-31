@@ -78,7 +78,7 @@
 (require 'use-package)
 
 (defvar kc/font-family "PragmataPro")
-(defvar kc/font-size 150)
+(defvar kc/font-size 170)
 ;; Allows per-machine config by loading the `init-$HOSTNAME.el` file
 ;; on startup
 (defconst kc/local-conf-file
