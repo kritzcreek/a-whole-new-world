@@ -208,6 +208,11 @@
 (global-set-key (kbd "<f1> l") 'counsel-load-library)
 (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
 
+(use-package dabbrev
+  :bind* (("C-/" . #'dabbrev-completion))
+  :custom
+  (dabbrev-case-replace nil))
+
 (use-package project :ensure t
   :pin elpa
   :general
@@ -277,7 +282,9 @@
 
 (use-package undo-tree
   :ensure t
-  :config (global-undo-tree-mode)
+  :config
+  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.undo-tree")))
+  (global-undo-tree-mode)
   :diminish undo-tree-mode)
 
 (use-package diminish :ensure t)
@@ -300,15 +307,26 @@
 ;; (mapcar #'disable-theme custom-enabled-themes)
 ;; (load-theme 'leuven t)
 
+(use-package modus-themes
+  :ensure t
+  ;; :config (load-theme 'modus-operandi t) ;; light
+  :config (load-theme 'modus-vivendi t) ;; dark
+  )
+
 (use-package doom-themes
   :ensure t
-;;  :config (load-theme 'doom-moonlight t)) ;; dark
-  :config (load-theme 'doom-spacegrey t)) ;; light
+  ;; :config (load-theme 'doom-moonlight t) ;; dark
+  ;; :config (load-theme 'doom-spacegrey t) ;; light
+  )
 
 (use-package doom-modeline
   :ensure t
   :config (setq doom-modeline-icon nil)
   :hook (after-init . doom-modeline-mode))
+
+(use-package rainbow-delimiters
+  :ensure t
+  :hook ((prog-mode . rainbow-delimiters-mode)))
 
 (use-package smartparens
   :ensure t
@@ -335,6 +353,8 @@
 
 (use-package flycheck
   :ensure t
+  :config
+  (setq flycheck-checker-error-threshold 10000)
   :general
   (general-define-key
    :keymaps 'normal
