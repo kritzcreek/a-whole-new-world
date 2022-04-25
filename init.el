@@ -194,6 +194,7 @@
    :keymaps 'normal
    "SPC f f" 'counsel-find-file
    "SPC h f" 'counsel-describe-function
+   "SPC h v" 'counsel-describe-variable
    "SPC u"   'counsel-unicode-char
    "SPC p s" 'counsel-rg
    "SPC SPC" 'counsel-M-x))
