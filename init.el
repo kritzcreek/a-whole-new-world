@@ -309,14 +309,9 @@
 
 (use-package modus-themes
   :ensure t
+  :pin elpa
   :config (load-theme 'modus-operandi t) ;; light
   ;; :config (load-theme 'modus-vivendi t) ;; dark
-  )
-
-(use-package doom-themes
-  :ensure t
-  ;; :config (load-theme 'doom-moonlight t) ;; dark
-  ;; :config (load-theme 'doom-spacegrey t) ;; light
   )
 
 (use-package doom-modeline
