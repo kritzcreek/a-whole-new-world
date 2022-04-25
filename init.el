@@ -220,7 +220,13 @@
   (general-define-key
    :keymaps 'normal
    "SPC p p" 'project-switch-project
-   "SPC p f" 'project-find-file))
+   "SPC p f" 'project-find-file)
+  :config
+  (setq project-switch-commands
+        '((project-find-file "Find file")
+          (magit-status "Magit" ?m)
+          (counsel-rg "Search" ?s)
+          (project-dired "Dired" ?d))))
 
 ;; which-key
 (use-package which-key :ensure t
