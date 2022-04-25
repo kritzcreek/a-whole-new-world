@@ -8,7 +8,7 @@
 (setq inhibit-startup-screen t ); inhibit useless and old-school startup screen
 (setq coding-system-for-write 'utf-8 )
 (setq sentence-end-double-space nil); sentence SHOULD end with only a point.
-(setq fill-column 80); toggle wrapping text at the 80th character
+(setq fill-column 100); toggle wrapping text at the 90th character
 (setq initial-scratch-message "Cheers love, the cavalry's here!") ; print a default message in the empty scratch buffer opened at startup
 
 (if (display-graphic-p)
@@ -78,7 +78,7 @@
 (require 'use-package)
 
 (defvar kc/font-family "PragmataPro")
-(defvar kc/font-size 170)
+(defvar kc/font-size 160)
 ;; Allows per-machine config by loading the `init-$HOSTNAME.el` file
 ;; on startup
 (defconst kc/local-conf-file
@@ -140,7 +140,7 @@
     (setq
      evil-want-C-u-scroll t
      evil-want-keybinding nil
-     evil-undo-system 'undo-tree)
+     evil-undo-system 'undo-redo)
     (evil-mode 1)
     (evil-declare-change-repeat 'company-complete)))
 
@@ -280,13 +280,6 @@
    :keymaps 'insert
    "C-M-SPC" 'yas-expand))
 
-(use-package undo-tree
-  :ensure t
-  :config
-  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.undo-tree")))
-  (global-undo-tree-mode)
-  :diminish undo-tree-mode)
-
 (use-package diminish :ensure t)
 
 ;; magit
@@ -309,8 +302,8 @@
 
 (use-package modus-themes
   :ensure t
-  ;; :config (load-theme 'modus-operandi t) ;; light
-  :config (load-theme 'modus-vivendi t) ;; dark
+  :config (load-theme 'modus-operandi t) ;; light
+  ;; :config (load-theme 'modus-vivendi t) ;; dark
   )
 
 (use-package doom-themes
@@ -373,14 +366,16 @@
 
 (use-package lsp-mode
   :ensure t
-  :config (setq lsp-rust-server 'rust-analyzer)
+  :config
+  (setq lsp-rust-server 'rust-analyzer)
   :hook ((rust-mode . lsp)
          (typescript-mode . lsp)
+         (tuareg-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
 
 ;; optionally
-;; (use-package lsp-ui :ensure t :commands lsp-ui-mode)
+(use-package lsp-ui :ensure t :commands lsp-ui-mode)
 
 (use-package typescript-mode :ensure t
   :config (setq typescript-indent-level 2))
@@ -449,18 +444,6 @@
 ;; OCaml
 
 (use-package tuareg :ensure t)
-(use-package merlin :ensure t
-  :config
-  (add-hook 'tuareg-mode-hook #'merlin-mode)
-  (add-hook 'caml-mode-hook #'merlin-mode)
-  :general
-  (general-define-key
-   :keymaps 'merlin-mode-map
-   :states '(normal visual)
-   ", t" 'merlin-type-enclosing
-   ", g g" 'merlin-locate
-   "SPC e n" 'merlin-error-next
-   "SPC e p" 'merlin-error-prev))
 
 ;; WASM
 (use-package wat-mode
