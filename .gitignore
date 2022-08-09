@@ -14,3 +14,4 @@
 /projects
 /.lsp-session-*
 /.undo-tree/*
+/eln-cache/
