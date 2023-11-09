@@ -77,7 +77,7 @@
 
 (require 'use-package)
 
-(defvar kc/font-family "PragmataPro")
+(defvar kc/font-family "SF Mono")
 (defvar kc/font-size 160)
 ;; Allows per-machine config by loading the `init-$HOSTNAME.el` file
 ;; on startup
@@ -89,8 +89,11 @@
   (load kc/local-conf-file))
 
 ;; Setting up font and size
-(set-face-attribute 'default nil :family kc/font-family)
-(set-face-attribute 'default nil :height kc/font-size)
+(set-face-attribute
+ 'default nil
+ :family kc/font-family
+ :weight 'normal
+ :height kc/font-size)
 
 ;; keybindings
 (use-package general :ensure t
@@ -263,15 +266,15 @@
   (general-define-key
    :keymaps 'org-tree-slide-mode-map
    :state '(normal visual)
-   "C-<right>" 'org-tree-slide-move-next-tree
-   "C-<left>" 'org-tree-slide-move-previous-tree)
+   "<right>" 'org-tree-slide-move-next-tree
+   "<left>" 'org-tree-slide-move-previous-tree)
   (general-define-key
    :state '(normal visual)
    "SPC t p" 'org-tree-slide-mode)
   (add-hook
    'org-tree-slide-play-hook
    (lambda ()
-     (text-scale-increase 5)
+     (text-scale-increase 4)
      (org-tree-slide-presentation-profile)
      (org-redisplay-inline-images)))
   (add-hook
@@ -297,6 +300,7 @@
    "SPC g s" 'magit-status)
   :config
   (setq magit-completing-read-function 'ivy-completing-read))
+  (add-hook 'magit-status-mode-hook #'turn-off-evil-surround-mode)
 
 ;; Highlighting TODO keywords
 (use-package hl-todo
