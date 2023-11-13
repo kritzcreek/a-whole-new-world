@@ -1,2 +1,2 @@
-(setq kc/font-family "PragmataPro")
-(setq kc/font-size 150)
+(setq kc/font-family "PragmataPro Liga")
+(setq kc/font-size 160)

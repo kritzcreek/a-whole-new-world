@@ -33,8 +33,8 @@
 (setq custom-file "~/.emacs.d/etc/custom.el")
 (load custom-file)
 
-(when (memq system-type '(darwin windows-nt))
-  (setq ring-bell-function 'ignore))
+;; I don't want no bell
+(setq ring-bell-function 'ignore)
 
 ;; Always start in HOME dir when on Windows, as I never start Emacs
 ;; from the terminal here
@@ -77,8 +77,8 @@
 
 (require 'use-package)
 
-(defvar kc/font-family "SF Mono")
-(defvar kc/font-size 160)
+(defvar kc/font-family "PragmataPro Liga")
+(defvar kc/font-size 180)
 ;; Allows per-machine config by loading the `init-$HOSTNAME.el` file
 ;; on startup
 (defconst kc/local-conf-file
@@ -370,19 +370,6 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-(use-package lsp-mode
-  :ensure t
-  :config
-  (setq lsp-rust-server 'rust-analyzer)
-  :hook ((rust-mode . lsp)
-         (typescript-mode . lsp)
-         (tuareg-mode . lsp)
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
-
-;; optionally
-(use-package lsp-ui :ensure t :commands lsp-ui-mode)
-
 (use-package typescript-mode :ensure t
   :config (setq typescript-indent-level 2))
 
@@ -397,9 +384,7 @@
    ", c b" 'cargo-process-build
    ", c t" 'cargo-process-test
    ", c r" 'cargo-process-run
-   ", c f" 'cargo-process-fmt
-   ", a" 'lsp-execute-code-action
-   ))
+   ", c f" 'cargo-process-fmt))
 
 ;; haskell
 (use-package haskell-mode
@@ -430,10 +415,10 @@
 
 (use-package psc-ide
   :ensure t
-  ;; :load-path "~/code/psc-ide-emacs/"
+  :load-path "~/code/psc-ide-emacs/"
   :init (add-hook 'purescript-mode-hook 'kc/purescript-hook)
   :config
-  (setq ;; psc-ide-debug t
+  (setq psc-ide-debug t
         psc-ide-use-npm-bin t)
   :general
   (general-define-key
@@ -471,5 +456,21 @@
   :init (setq mode-require-final-newline nil
               require-final-newline nil)
   :config (global-ethan-wspace-mode 1))
+
+(use-package ligature :ensure t
+  :config
+  ;; A bunch of PragmataPro compatible ligatures
+  (ligature-set-ligatures
+   'prog-mode
+   '("!!" "!=" "!==" "!!!" "!=" "!==" "!>" "!=<" "#(" "#_" "#{" "#?" "#>" "##" "#_(" "%=" "%>" "%>%" "%<%" "&%" "&&" "&*" "&+" "&-" "&/"
+     "&=" "&&&" "&>" "$>" "***" "*=" "*/" "*>" "++" "+++" "+=" "+>" "++=" "--" "-<" "-<<" "-=" "->" "->>" "---" "-->" "-+-" "-\\/" "-|>"
+     "-<|" ".." "..." "..<" ".>" ".~" ".=" "/*" "//" "/>" "/=" "/==" "///" "/**" ":::" "::" ":=" ":=" ":>" ":=>" ":(" ":-(" ":)" ":-)"
+     ":/" ":\\" ":3" ":D" ":P" ":>:" ":<:" "<$>" "<*" "<*>" "<+>" "<-" "<<" "<<<" "<<=" "<=" "<=>" "<>" "<|>" "<<-" "<|" "<=<" "<~" "<~~"
+     "<<~" "<$" "<+" "<!>" "<@>" "<#>" "<%>" "<^>" "<&>" "<?>" "<.>" "</>" "<\\>" "<\">" "<:>" "<~>" "<**>" "<<^" "<!" "<@" "<#" "<%" "<^"
+     "<&" "<?" "<." "</" "<\\" "<\"" "<:" "<->" "<!--" "<--" "<~<" "<==>" "<|-" "<<|" "<-<" "<-->" "<<==" "<==" "=<<" "==" "===" "==>" "=>"
+     "=~" "=>>" "=/=" "=~=" "==>>" "==" "===" "=:=" ">-" ">=" ">>" ">>-" ">>=" ">>>" ">=>" ">>^" ">>|" ">!=" ">->" "??" "?~" "?=" "?>"
+     "???" "?." "^=" "^." "^?" "^.." "^<<" "^>>" "^>" "\\\\" "\\>" "\\/-" "@>" "|=" "||" "|>" "|||" "|+|" "|->" "|-->" "|=>" "|==>"
+     "|>-" "|<<" "||>" "|>>" "|-" "||-" "~=" "~>" "~~>" "~>>" "[[" "]]" "\">" "_|_"))
+  (global-ligature-mode t))
 
 (setq debug-on-error nil)
