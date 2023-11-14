@@ -78,22 +78,8 @@
 (require 'use-package)
 
 (defvar kc/font-family "PragmataPro Liga")
-(defvar kc/font-size 180)
-;; Allows per-machine config by loading the `init-$HOSTNAME.el` file
-;; on startup
-(defconst kc/local-conf-file
-  (downcase (format "~/.emacs.d/init-%s.el" (system-name))))
-
-(when (file-exists-p kc/local-conf-file)
-  (message "Applying local overrides")
-  (load kc/local-conf-file))
-
-;; Setting up font and size
-(set-face-attribute
- 'default nil
- :family kc/font-family
- :weight 'normal
- :height kc/font-size)
+(defvar kc/font-size 22)
+(set-frame-font (format "%s-%i" kc/font-family kc/font-size) nil t)
 
 ;; keybindings
 (use-package general :ensure t
