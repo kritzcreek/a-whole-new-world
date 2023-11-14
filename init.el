@@ -384,7 +384,9 @@
    ", c b" 'cargo-process-build
    ", c t" 'cargo-process-test
    ", c r" 'cargo-process-run
-   ", c f" 'cargo-process-fmt))
+   ", c f" 'cargo-process-fmt
+   ", c c" 'cargo-process-clippy
+   ))
 
 ;; haskell
 (use-package haskell-mode
