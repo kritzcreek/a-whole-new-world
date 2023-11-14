@@ -112,7 +112,9 @@ Support toggle for shell, term, ansi-term, eshell and ielm."
   (let ((name (format "*%s*" (if (eq shell 'term) "terminal" shell)))
         (original-buffer (current-buffer)))
     (unless (get-buffer name)
-      (tt--start-shell shell name)
+      (let ((default-directory (when (project-current)
+                                 (project-root (project-current)))))
+        (tt--start-shell shell name))
       (pop-to-buffer-same-window original-buffer))
     (tt--toggle (get-buffer name))))
 
