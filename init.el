@@ -400,6 +400,13 @@
    :keymaps 'insert
    "M-SPC" 'xah-math-input-change-to-symbol))
 
+(use-package term-toggle
+  :load-path "~/.emacs.d/lisp"
+  :general
+  (general-define-key
+   :keymaps 'normal
+   "SPC t t" 'term-toggle-ansi))
+
 ;; purescript
 (use-package purescript-mode
   :ensure t
