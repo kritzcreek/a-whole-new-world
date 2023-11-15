@@ -336,13 +336,23 @@
     (smartparens-global-mode)
     (show-smartparens-global-mode)))
 
+(use-package flymake
+  :ensure t
+  :general
+  (general-define-key
+   :keymaps 'flymake-mode-map
+   :states '(normal visual)
+   "SPC e n" 'flymake-goto-next-error
+   "SPC e p" 'flymake-goto-prev-error))
+
 (use-package flycheck
   :ensure t
   :config
   (setq flycheck-checker-error-threshold 10000)
   :general
   (general-define-key
-   :keymaps 'normal
+   :keymaps 'flycheck-mode-map
+   :states '(normal visual)
    "SPC e n" 'flycheck-next-error
    "SPC e p" 'flycheck-previous-error))
 
