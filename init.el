@@ -421,7 +421,7 @@
 
 (use-package psc-ide
   :ensure t
-  :load-path "~/code/psc-ide-emacs/"
+  ;; :load-path "~/code/psc-ide-emacs/"
   :init (add-hook 'purescript-mode-hook 'kc/purescript-hook)
   :config
   (setq psc-ide-debug t
@@ -446,7 +446,9 @@
 (use-package wat-mode
   :load-path "~/.emacs.d/lisp/wat-mode")
 
-(use-package idris-mode :ensure t)
+(use-package go-mode :ensure t)
+
+(use-package lua-mode :ensure t)
 
 (use-package tex-site
   :ensure auctex
