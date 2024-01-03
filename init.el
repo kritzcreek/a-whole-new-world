@@ -332,6 +332,7 @@
     (sp-local-pair 'lisp-interaction-mode "`" nil :actions nil)
     (sp-local-pair 'purescript-mode "\\{" nil :actions nil)
     (sp-local-pair 'purescript-mode "'" nil :actions nil)
+    (sp-local-pair 'rust-mode "'" nil :actions nil)
 
     (smartparens-global-mode)
     (show-smartparens-global-mode)))
