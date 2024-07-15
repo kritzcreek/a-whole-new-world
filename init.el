@@ -63,6 +63,7 @@
 (require 'package)
 (setq package-enable-at-startup nil) ; tells emacs not to load any packages before starting up
 (setq package-archives '(("elpa" . "http://elpa.gnu.org/packages/")
+                         ("org" . "https://orgmode.org/elpa/")
                          ("melpa" . "http://melpa.org/packages/")))
 (package-initialize)
 
@@ -97,6 +98,7 @@
    "SPC b b" 'switch-to-buffer
    "SPC f d" 'kc/find-user-init-file
    "SPC f t" 'kc/find-user-todo-file
+   "SPC f j" 'kc/find-user-journal-file
    "SPC q"   'save-buffers-kill-terminal
    "SPC a d" 'dired
    "SPC TAB" 'kc/switch-to-previous-buffer
@@ -111,11 +113,17 @@
   (find-file-other-window user-init-file))
 
 (defconst kc/user-todo-file "~/Dropbox/org/todo.org")
+(defconst kc/user-journal-file "~/Dropbox/org/journal.org")
 
 (defun kc/find-user-todo-file ()
   "Edit the `user-todo-file', in another window."
   (interactive)
   (find-file-other-window kc/user-todo-file))
+
+(defun kc/find-user-journal-file ()
+  "Edit the `user-journal-file', in another window."
+  (interactive)
+  (find-file-other-window kc/user-journal-file))
 
 (defun kc/switch-to-previous-buffer ()
   (interactive)
@@ -213,7 +221,7 @@
   :config
   (setq project-switch-commands
         '((project-find-file "Find file")
-          (magit-status "Magit" ?m)
+          (magit-project-status "Magit" ?m)
           (counsel-rg "Search" ?s)
           (project-dired "Dired" ?d))))
 
@@ -245,17 +253,33 @@
   :after company
   :config (company-quickhelp-mode))
 
+(use-package org
+  :mode (("\\.org$" . org-mode))
+  :config
+  (general-define-key
+   :keymaps 'org-mode-map
+   :states '(normal visual)
+   "<tab>" 'org-cycle
+   ", n" 'org-narrow-to-subtree
+   ", w" 'widen
+   ", c i" 'org-clock-in
+   ", c o" 'org-clock-out
+   ", c g" 'org-clock-goto
+   ", c r" 'org-clock-report
+   ", t"   'org-todo))
+
 (use-package org-tempo :after (org))
 
 (use-package org-tree-slide :ensure t
   :config
   (general-define-key
    :keymaps 'org-tree-slide-mode-map
-   :state '(normal visual)
+   :states '(normal visual)
    "<right>" 'org-tree-slide-move-next-tree
    "<left>" 'org-tree-slide-move-previous-tree)
   (general-define-key
-   :state '(normal visual)
+   :keymaps 'org-mode-map
+   :states '(normal visual)
    "SPC t p" 'org-tree-slide-mode)
   (add-hook
    'org-tree-slide-play-hook
@@ -284,6 +308,7 @@
   (general-define-key
    :keymaps 'normal
    "SPC g s" 'magit-status)
+  (general-define-key :keymaps 'magit-mode-map "SPC" nil)
   :config
   (setq magit-completing-read-function 'ivy-completing-read))
   (add-hook 'magit-status-mode-hook #'turn-off-evil-surround-mode)
