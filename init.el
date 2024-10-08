@@ -253,6 +253,28 @@
   :after company
   :config (company-quickhelp-mode))
 
+(use-package xref
+  :ensure t
+  :config
+  (setq xref-show-definitions-function #'xref-show-definitions-completing-read
+        xref-show-xrefs-function #'xref-show-definitions-completing-read))
+
+(use-package eglot
+  :ensure t
+  :hook (rust-mode . eglot-ensure)
+  :config
+  (setq eglot-autoshutdown t
+        eglot-events-buffer-size 0)
+  (add-to-list
+   'eglot-server-programs
+   '((rust-ts-mode rust-mode) .
+     ("rust-analyzer" :initializationOptions (:check (:command "clippy")))))
+  :general
+  (general-define-key
+   :keymaps '(normal visual)
+   "g D" 'eglot-find-typeDefinition
+   "g A" 'eglot-code-actions))
+
 (use-package org
   :mode (("\\.org$" . org-mode))
   :config
