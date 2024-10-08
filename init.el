@@ -130,8 +130,7 @@
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
 ;; evil
-(use-package evil
-  :ensure t
+(use-package evil :ensure t
   :init
   (progn
     (setq
@@ -145,8 +144,7 @@
   :after evil
   :config (evil-collection-init '(magit dired)))
 
-(use-package evil-surround
-  :ensure t
+(use-package evil-surround :ensure t
   :init
   (progn
     (global-evil-surround-mode 1)
@@ -159,16 +157,14 @@
   :config
   (evil-escape-mode))
 
-(use-package exec-path-from-shell
-  :ensure t
+(use-package exec-path-from-shell :ensure t
   :config
   (setq exec-path-from-shell-check-startup-files nil)
   (unless (eq system-type 'windows-nt)
       (exec-path-from-shell-initialize)))
 
 ;; Ivy things
-(use-package ivy
-  :ensure t
+(use-package ivy :ensure t
   :diminish ivy-mode
   :demand t
   :config
@@ -232,8 +228,7 @@
   (which-key-mode 1))
 
 ;; company
-(use-package company
-  :ensure t
+(use-package company :ensure t
   :diminish company-mode
   :config
   (global-company-mode)
@@ -248,19 +243,16 @@
    "C-j" 'company-select-next
    "C-k" 'company-select-previous))
 
-(use-package company-quickhelp
-  :ensure t
+(use-package company-quickhelp :ensure t
   :after company
   :config (company-quickhelp-mode))
 
-(use-package xref
-  :ensure t
+(use-package xref :ensure t
   :config
   (setq xref-show-definitions-function #'xref-show-definitions-completing-read
         xref-show-xrefs-function #'xref-show-definitions-completing-read))
 
-(use-package eglot
-  :ensure t
+(use-package eglot :ensure t
   :hook (rust-mode . eglot-ensure)
   :config
   (setq eglot-autoshutdown t
@@ -313,8 +305,7 @@
    'org-tree-slide-stop-hook
    (lambda () (text-scale-set 0))))
 
-(use-package yasnippet
-  :ensure t
+(use-package yasnippet :ensure t
   :config
   (yas-global-mode)
   :general
@@ -335,33 +326,27 @@
   (setq magit-completing-read-function 'ivy-completing-read))
   (add-hook 'magit-status-mode-hook #'turn-off-evil-surround-mode)
 
-;; Highlighting TODO keywords
-(use-package hl-todo
-  :ensure t
+(use-package hl-todo :ensure t
   :config (global-hl-todo-mode))
 
 ;; Undo all themes
 ;; (mapcar #'disable-theme custom-enabled-themes)
 ;; (load-theme 'leuven t)
 
-(use-package modus-themes
-  :ensure t
+(use-package modus-themes :ensure t
   :pin elpa
-  :config (load-theme 'modus-operandi t) ;; light
-  ;; :config (load-theme 'modus-vivendi t) ;; dark
+  ;; :config (load-theme 'modus-operandi t) ;; light
+  :config (load-theme 'modus-vivendi t) ;; dark
   )
 
-(use-package doom-modeline
-  :ensure t
+(use-package doom-modeline :ensure t
   :config (setq doom-modeline-icon nil)
   :hook (after-init . doom-modeline-mode))
 
-(use-package rainbow-delimiters
-  :ensure t
+(use-package rainbow-delimiters :ensure t
   :hook ((prog-mode . rainbow-delimiters-mode)))
 
-(use-package smartparens
-  :ensure t
+(use-package smartparens :ensure t
   :diminish smartparens-mode
   :init
   (progn
@@ -384,8 +369,7 @@
     (smartparens-global-mode)
     (show-smartparens-global-mode)))
 
-(use-package flymake
-  :ensure t
+(use-package flymake :ensure t
   :general
   (general-define-key
    :keymaps 'flymake-mode-map
@@ -393,8 +377,7 @@
    "SPC e n" 'flymake-goto-next-error
    "SPC e p" 'flymake-goto-prev-error))
 
-(use-package flycheck
-  :ensure t
+(use-package flycheck :ensure t
   :config
   (setq flycheck-checker-error-threshold 10000)
   :general
@@ -406,8 +389,7 @@
 
 (use-package restclient :ensure t)
 
-(use-package markdown-mode
-  :ensure t
+(use-package markdown-mode :ensure t
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
@@ -417,10 +399,10 @@
 (use-package typescript-mode :ensure t
   :config (setq typescript-indent-level 2))
 
-(use-package rust-mode :ensure t)
+(use-package rust-mode :ensure t
+  :init (setq rust-mode-treesitter-derive t))
 
-(use-package cargo
-  :ensure t
+(use-package cargo :ensure t
   :general
   (general-define-key
    :keymaps 'rust-mode-map
@@ -433,8 +415,7 @@
    ))
 
 ;; haskell
-(use-package haskell-mode
-  :ensure t
+(use-package haskell-mode :ensure t
   :config
   (setq haskell-interactive-popup-error nil))
 
@@ -454,8 +435,7 @@
    "SPC t t" 'term-toggle-ansi))
 
 ;; purescript
-(use-package purescript-mode
-  :ensure t
+(use-package purescript-mode :ensure t
   :diminish 'purescript-indentation-mode)
 
 (defun kc/purescript-hook ()
@@ -466,8 +446,7 @@
   (flycheck-mode)
   (setq-local flycheck-check-syntax-automatically '(mode-enabled save)))
 
-(use-package psc-ide
-  :ensure t
+(use-package psc-ide :ensure t
   ;; :load-path "~/code/psc-ide-emacs/"
   :init (add-hook 'purescript-mode-hook 'kc/purescript-hook)
   :config
@@ -501,12 +480,11 @@
   :ensure auctex
   :mode ("\\.tex\\'" . TeX-latex-mode))
 
-(use-package company-auctex
-  :defer t
-  :ensure t)
+(use-package company-auctex :ensure t
+  :defer t)
 
-(use-package ethan-wspace
-  :ensure t
+
+(use-package ethan-wspace :ensure t
   :diminish 'ethan-wspace-mode
   :init (setq mode-require-final-newline nil
               require-final-newline nil)
