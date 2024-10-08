@@ -218,7 +218,6 @@
   (setq project-switch-commands
         '((project-find-file "Find file")
           (magit-project-status "Magit" ?m)
-          (counsel-rg "Search" ?s)
           (project-dired "Dired" ?d))))
 
 ;; which-key
