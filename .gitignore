@@ -16,3 +16,4 @@
 /.undo-tree/*
 /eln-cache/
 /tree-sitter/
+/tramp

@@ -94,7 +94,7 @@
    "SPC ;"   'comment-or-uncomment-region)
   (general-define-key
    :keymaps 'normal
-   "SPC b d" 'kill-this-buffer
+   "SPC b d" 'kill-current-buffer
    "SPC b b" 'switch-to-buffer
    "SPC f d" 'kc/find-user-init-file
    "SPC f t" 'kc/find-user-todo-file
@@ -103,6 +103,7 @@
    "SPC a d" 'dired
    "SPC TAB" 'kc/switch-to-previous-buffer
    "SPC t f" 'display-fill-column-indicator-mode
+   "SPC c" 'compile
    "C-+" 'text-scale-increase
    "C--" 'text-scale-decrease
    "C-=" '(lambda () (interactive) (text-scale-set 0))))
@@ -252,14 +253,19 @@
         xref-show-xrefs-function #'xref-show-definitions-completing-read))
 
 (use-package eglot :ensure t
-  :hook (rust-mode . eglot-ensure)
+  :after typst-ts-mode rust-mode
+  :hook
+  (rust-mode . eglot-ensure)
+  (typst-ts-mode . eglot-ensure)
   :config
   (setq eglot-autoshutdown t
         eglot-events-buffer-size 0)
   (add-to-list
    'eglot-server-programs
-   '((rust-ts-mode rust-mode) .
-     ("rust-analyzer" :initializationOptions (:check (:command "clippy")))))
+   '((rust-ts-mode rust-mode) . ("rust-analyzer" :initializationOptions (:check (:command "clippy")))))
+  (add-to-list
+   'eglot-server-programs
+   '((typst-ts-mode) . ("tinymist" :initializationOptions ())))
   :general
   (general-define-key
    :keymaps '(normal visual)
@@ -332,11 +338,15 @@
 ;; (mapcar #'disable-theme custom-enabled-themes)
 ;; (load-theme 'leuven t)
 
-(use-package modus-themes :ensure t
-  :pin elpa
-  ;; :config (load-theme 'modus-operandi t) ;; light
-  :config (load-theme 'modus-vivendi t) ;; dark
+(use-package catppuccin-theme :ensure t
+  :config (load-theme 'catppuccin t) ;; dark
   )
+
+;(use-package modus-themes :ensure t
+;  :pin elpa
+;  ;; :config (load-theme 'modus-operandi t) ;; light
+;  :config (load-theme 'modus-vivendi t) ;; dark
+;  )
 
 (use-package doom-modeline :ensure t
   :config (setq doom-modeline-icon nil)
@@ -410,8 +420,7 @@
    ", c t" 'cargo-process-test
    ", c r" 'cargo-process-run
    ", c f" 'cargo-process-fmt
-   ", c c" 'cargo-process-clippy
-   ))
+   ", c c" 'cargo-process-clippy))
 
 ;; haskell
 (use-package haskell-mode :ensure t
@@ -464,16 +473,15 @@
    ", a i" 'psc-ide-add-import))
 
 ;; OCaml
-
 (use-package tuareg :ensure t)
 
-;; WASM
 (use-package wat-mode
   :load-path "~/.emacs.d/lisp/wat-mode")
 
 (use-package go-mode :ensure t)
 
-(use-package lua-mode :ensure t)
+(use-package just-mode :ensure t
+  :init (setq compile-command "just"))
 
 (use-package tex-site
   :ensure auctex
