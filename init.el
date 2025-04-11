@@ -104,6 +104,7 @@
    "SPC TAB" 'kc/switch-to-previous-buffer
    "SPC t f" 'display-fill-column-indicator-mode
    "SPC c" 'compile
+   "g R" 'xref-find-references
    "C-+" 'text-scale-increase
    "C--" 'text-scale-decrease
    "C-=" '(lambda () (interactive) (text-scale-set 0))))
@@ -253,13 +254,11 @@
         xref-show-xrefs-function #'xref-show-definitions-completing-read))
 
 (use-package eglot :ensure t
-  :after typst-ts-mode rust-mode
-  :hook
-  (rust-mode . eglot-ensure)
-  (typst-ts-mode . eglot-ensure)
+  :hook ((rust-mode typst-ts-mode tuareg-mode) . eglot-ensure)
   :config
   (setq eglot-autoshutdown t
-        eglot-events-buffer-size 0)
+        eglot-events-buffer-size 0
+        eglot-extend-to-xref nil)
   (add-to-list
    'eglot-server-programs
    '((rust-ts-mode rust-mode) . ("rust-analyzer" :initializationOptions (:check (:command "clippy")))))
@@ -268,7 +267,7 @@
    '((typst-ts-mode) . ("tinymist" :initializationOptions ())))
   :general
   (general-define-key
-   :keymaps '(normal visual)
+   :keymaps 'normal
    "g D" 'eglot-find-typeDefinition
    "g A" 'eglot-code-actions))
 
