@@ -186,7 +186,7 @@
 (use-package counsel :ensure t
   :general
   (general-define-key
-   :keymaps 'normal
+   :keymaps '(normal visual)
    "SPC f f" 'counsel-find-file
    "SPC h f" 'counsel-describe-function
    "SPC h v" 'counsel-describe-variable
