@@ -254,7 +254,7 @@
         xref-show-xrefs-function #'xref-show-definitions-completing-read))
 
 (use-package eglot :ensure t
-  :hook ((rust-mode typst-ts-mode tuareg-mode) . eglot-ensure)
+  :hook ((rust-mode typst-ts-mode) . eglot-ensure)
   :config
   (setq eglot-autoshutdown t
         eglot-events-buffer-size 0
@@ -361,7 +361,8 @@
     (setq sp-message-width nil
           sp-show-pair-from-inside t
           sp-autoescape-string-quote nil
-          sp-cancel-autoskip-on-backward-movement nil))
+          sp-cancel-autoskip-on-backward-movement nil)
+    )
   :config
   (progn
     (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
@@ -373,6 +374,7 @@
     (sp-local-pair 'purescript-mode "\\{" nil :actions nil)
     (sp-local-pair 'purescript-mode "'" nil :actions nil)
     (sp-local-pair 'rust-mode "'" nil :actions nil)
+    (sp-local-pair 'motoko-ts-mode "{" nil :post-handlers '(("||\n[i]" "RET")))
 
     (smartparens-global-mode)
     (show-smartparens-global-mode)))
@@ -426,6 +428,10 @@
   :config
   (setq haskell-interactive-popup-error nil))
 
+;; Colors in compilation buffers
+(use-package ansi-color
+    :hook (compilation-filter . ansi-color-compilation-filter))
+
 ;; Unicode input
 (use-package xah-math-input
   :load-path "~/.emacs.d/lisp"
@@ -440,6 +446,16 @@
   (general-define-key
    :keymaps 'normal
    "SPC t t" 'term-toggle-ansi))
+
+(use-package motoko-ts-mode
+  ;:load-path "~/work/motoko/emacs"
+  :load-path "~/.emacs.d/lisp"
+  :config
+  (general-define-key
+   :keymaps 'motoko-ts-mode-map
+   :states 'normal
+   "SPC e n" 'next-error
+   "SPC e p" 'previous-error))
 
 ;; purescript
 (use-package purescript-mode :ensure t
@@ -472,7 +488,10 @@
    ", a i" 'psc-ide-add-import))
 
 ;; OCaml
-(use-package tuareg :ensure t)
+(use-package tuareg :ensure t
+  :after eglot
+  :hook
+  (tuareg-mode . eglot-ensure))
 
 (use-package wat-mode
   :load-path "~/.emacs.d/lisp/wat-mode")
