@@ -375,6 +375,7 @@
     (sp-local-pair 'purescript-mode "'" nil :actions nil)
     (sp-local-pair 'rust-mode "'" nil :actions nil)
     (sp-local-pair 'motoko-ts-mode "{" nil :post-handlers '(("||\n[i]" "RET")))
+    (sp-local-pair 'nemo-mode "{" nil :post-handlers '(("||\n[i]" "RET")))
 
     (smartparens-global-mode)
     (show-smartparens-global-mode)))
@@ -453,6 +454,15 @@
   :config
   (general-define-key
    :keymaps 'motoko-ts-mode-map
+   :states 'normal
+   "SPC e n" 'next-error
+   "SPC e p" 'previous-error))
+
+(use-package nemo-mode
+  :load-path "~/.emacs.d/lisp"
+  :config
+  (general-define-key
+   :keymaps 'nemo-mode-map
    :states 'normal
    "SPC e n" 'next-error
    "SPC e p" 'previous-error))
