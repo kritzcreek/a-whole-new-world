@@ -23,7 +23,7 @@
    :language 'nemo
    :override t
    :feature 'keyword
-   '(["if" "else" "while" "fn" "if" "use" "exports"
+   '(["when" "if" "else" "while" "fn" "if" "use" "exports"
       "module" "let" "set" "return" "match" "struct"
       "variant" "import" "from" "global"] @font-lock-keyword-face)
 
