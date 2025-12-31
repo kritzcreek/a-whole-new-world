@@ -49,7 +49,7 @@
    :language 'nemo
    :override t
    :feature 'keyword
-   '(([(ty_i32) (ty_f32) (ty_bytes) (ty_bool) (ty_unit)] @font-lock-type-face)
+   '(([(ty_i32) (ty_u32) (ty_f32) (ty_bytes) (ty_bool) (ty_unit)] @font-lock-type-face)
      ((ty_cons (upper_ident) @font-lock-type-face))
      ((ty_var) @font-lock-variable-use-face))
 
@@ -74,6 +74,7 @@
      ((node-is "}") (and parent parent-bol) 0)
      ((parent-is "block_e") parent-bol nemo-indent)
      ((parent-is "match_e") parent-bol nemo-indent)
+     ((parent-is "struct_e") parent-bol nemo-indent)
      ((parent-is "let_decl") parent-bol nemo-indent)
      ((parent-is "set_decl") parent-bol nemo-indent)
      ((parent-is "top_global") parent-bol nemo-indent)
