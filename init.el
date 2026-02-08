@@ -79,7 +79,7 @@
 (require 'use-package)
 
 (defvar kc/font-family "PragmataPro Liga")
-(defvar kc/font-size 22)
+(defvar kc/font-size 16)
 (set-frame-font (format "%s-%i" kc/font-family kc/font-size) nil t)
 
 ;; keybindings
@@ -505,8 +505,6 @@
 
 (use-package wat-mode
   :load-path "~/.emacs.d/lisp/wat-mode")
-
-(use-package go-mode :ensure t)
 
 (use-package just-mode :ensure t
   :init (setq compile-command "just"))
