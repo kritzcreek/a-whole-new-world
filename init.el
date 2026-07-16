@@ -9,7 +9,7 @@
 (setq coding-system-for-write 'utf-8)
 (setq sentence-end-double-space nil); sentence SHOULD end with only a point.
 (setq fill-column 100); toggle wrapping text at the 90th character
-(setq initial-scratch-message "Cheers love, the cavalry's here!") ; print a default message in the empty scratch buffer opened at startup
+(setq initial-scratch-message "Cheers love, the cavalry's here!")
 
 (if (display-graphic-p)
     (scroll-bar-mode 0)
@@ -60,17 +60,16 @@
 (setq save-interprogram-paste-before-kill t)
 (setq use-dialog-box nil)
 
+;; Sane indentation default
+(setq tab-width 2)
+(setq js-indent-level 2)
+
 (require 'package)
 (setq package-enable-at-startup nil) ; tells emacs not to load any packages before starting up
 (setq package-archives '(("elpa" . "http://elpa.gnu.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
                          ("melpa" . "http://melpa.org/packages/")))
 (package-initialize)
-
-;; Sane indentation default
-(setq tab-width 2)
-(setq js-indent-level 2)
-
 (require 'use-package)
 
 (defvar kc/font-family "PragmataPro Liga")

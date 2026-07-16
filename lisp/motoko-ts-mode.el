@@ -108,6 +108,9 @@
 
   (setq-local treesit-simple-indent-rules motoko-ts-indent-rules)
 
+  (setq-local comment-start "//")
+  (setq-local comment-start-skip "//[\t ]*")
+
   (treesit-major-mode-setup))
 
 (define-derived-mode motoko-ts-mode prog-mode "Motoko"
