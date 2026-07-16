@@ -67,11 +67,6 @@
                          ("melpa" . "http://melpa.org/packages/")))
 (package-initialize)
 
-;; Bootstrap `use-package'
-(unless (package-installed-p 'use-package) ; unless it is already installed
-  (package-refresh-contents) ; updage packages archive
-  (package-install 'use-package)) ; and install the most recent version of use-package
-
 ;; Sane indentation default
 (setq tab-width 2)
 (setq js-indent-level 2)
@@ -209,8 +204,7 @@
   :custom
   (dabbrev-case-replace nil))
 
-(use-package project :ensure t
-  :pin elpa
+(use-package project
   :general
   (general-define-key
    :keymaps 'normal
@@ -248,12 +242,12 @@
   :after company
   :config (company-quickhelp-mode))
 
-(use-package xref :ensure t
+(use-package xref
   :config
   (setq xref-show-definitions-function #'xref-show-definitions-completing-read
         xref-show-xrefs-function #'xref-show-definitions-completing-read))
 
-(use-package eglot :ensure t
+(use-package eglot
   :hook ((rust-mode typst-ts-mode) . eglot-ensure)
   :config
   (setq eglot-autoshutdown t
@@ -380,13 +374,16 @@
     (smartparens-global-mode)
     (show-smartparens-global-mode)))
 
-(use-package flymake :ensure t
+(use-package flymake
   :general
   (general-define-key
    :keymaps 'flymake-mode-map
    :states '(normal visual)
    "SPC e n" 'flymake-goto-next-error
-   "SPC e p" 'flymake-goto-prev-error))
+   "SPC e p" 'flymake-goto-prev-error)
+  :config
+  (evil-declare-not-repeat 'flymake-goto-next-error)
+  (evil-declare-not-repeat 'flymake-goto-prev-error))
 
 (use-package flycheck :ensure t
   :config
@@ -508,6 +505,8 @@
 
 (use-package just-mode :ensure t
   :init (setq compile-command "just"))
+
+(use-package nix-mode :ensure t)
 
 (use-package tex-site
   :ensure auctex
