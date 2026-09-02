@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (setq debug-on-error t)
 (setq delete-old-versions -1); delete excess backup versions silently
 (setq version-control t); use version control
@@ -138,7 +139,10 @@
 
 (use-package evil-collection :ensure t
   :after evil
-  :config (evil-collection-init '(magit dired)))
+  :init
+  (setq evil-collection-key-blacklist '("SPC"))
+  :config
+  (evil-collection-init '(magit dired)))
 
 (use-package evil-surround :ensure t
   :init
