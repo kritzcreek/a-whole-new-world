@@ -63,7 +63,6 @@
 
 ;; Sane indentation default
 (setq tab-width 2)
-(setq js-indent-level 2)
 
 (require 'package)
 (setq package-enable-at-startup nil) ; tells emacs not to load any packages before starting up
@@ -157,12 +156,6 @@
   :config
   (evil-escape-mode))
 
-(use-package exec-path-from-shell :ensure t
-  :config
-  (setq exec-path-from-shell-check-startup-files nil)
-  (unless (eq system-type 'windows-nt)
-      (exec-path-from-shell-initialize)))
-
 ;; Ivy things
 (use-package ivy :ensure t
   :diminish ivy-mode
@@ -206,6 +199,10 @@
   :bind* (("C-/" . #'dabbrev-completion))
   :custom
   (dabbrev-case-replace nil))
+
+(use-package editorconfig :ensure t
+  :config
+  (editorconfig-mode 1))
 
 (use-package project
   :general
@@ -266,6 +263,7 @@
   (general-define-key
    :keymaps 'normal
    "g D" 'eglot-find-typeDefinition
+   "g I" 'eglot-find-implementation
    "g A" 'eglot-code-actions))
 
 (use-package org
@@ -410,8 +408,12 @@
 (use-package typescript-mode :ensure t
   :config (setq typescript-indent-level 2))
 
+(use-package svelte-mode :ensure t)
+
 (use-package rust-mode :ensure t
   :init (setq rust-mode-treesitter-derive t))
+
+(use-package go-ts-mode :ensure t)
 
 (use-package cargo :ensure t
   :general
@@ -519,11 +521,9 @@
   :defer t)
 
 
-(use-package ethan-wspace :ensure t
-  :diminish 'ethan-wspace-mode
-  :init (setq mode-require-final-newline nil
-              require-final-newline nil)
-  :config (global-ethan-wspace-mode 1))
+(use-package ws-butler :ensure t
+  :diminish 'ws-butler-mode
+  :config (ws-butler-global-mode 1))
 
 (use-package ligature :ensure t
   :config

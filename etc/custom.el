@@ -9,12 +9,14 @@
      default))
  '(package-selected-packages
    '(auctex cargo catppuccin-theme company-auctex company-quickhelp
-            counsel diminish doom-modeline ethan-wspace
+            counsel diminish doom-modeline ws-butler
             evil-collection evil-escape evil-surround
             exec-path-from-shell flycheck general go-mode haskell-mode
             hl-todo just-mode ligature magit markdown-mode nix-mode
             org-tree-slide psc-ide purescript-mode rainbow-delimiters
-            restclient rust-mode smartparens tuareg typescript-mode)))
+            restclient rust-mode smartparens svelte-mode
+            svelte-ts-mode tuareg typescript-mode))
+ '(safe-local-variable-values '((svelte-basic-offset . 4))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
